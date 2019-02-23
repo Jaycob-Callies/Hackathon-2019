@@ -37,6 +37,10 @@ int main()
 	shape.move((float)hMid - 100, (float)vMid - 100);
 	shape.setFillColor(sf::Color::Green);
 
+	//load images
+	sf::Image arrow;
+	//arrow.loadFromFile("HealthPotion.png");
+
 	while (window.isOpen())
 	{
 
@@ -59,6 +63,7 @@ int main()
 				else //bottom right
 				{
 					shape.setFillColor(sf::Color::Yellow);
+					miniGameRangedAttack(arrow , window, 1.0);
 				}
 			}
 			if (event.type == sf::Event::Closed)

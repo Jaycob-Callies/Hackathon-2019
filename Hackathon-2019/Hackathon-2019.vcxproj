@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B97AF1A8-35EC-45E9-93F2-8D0EFB199C90}</ProjectGuid>
     <RootNamespace>Hackathon2019</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -127,6 +127,90 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="AssPoop.png" />
+    <Image Include="BarbarianMonster - Copy.png" />
+    <Image Include="BarbarianMonster.png" />
+    <Image Include="BarbarianMonsterTop - Copy.png" />
+    <Image Include="BarbarianMonsterTop.png" />
+    <Image Include="BBTop - Copy.png" />
+    <Image Include="BBTop.png" />
+    <Image Include="BlueBard - Copy.png" />
+    <Image Include="BlueBard.png" />
+    <Image Include="BlueMage - Copy.png" />
+    <Image Include="BlueMage.png" />
+    <Image Include="BlueRogue - Copy.png" />
+    <Image Include="BlueRogue.png" />
+    <Image Include="BlueWarrior - Copy.png" />
+    <Image Include="BlueWarrior.png" />
+    <Image Include="BMTop - Copy.png" />
+    <Image Include="BMTop.png" />
+    <Image Include="BRTop - Copy.png" />
+    <Image Include="BRTop.png" />
+    <Image Include="BWTop - Copy.png" />
+    <Image Include="BWTop.png" />
+    <Image Include="Chest - Copy.png" />
+    <Image Include="Chest.png" />
+    <Image Include="ChestTop - Copy.png" />
+    <Image Include="ChestTop.png" />
+    <Image Include="Door1 - Copy.png" />
+    <Image Include="Door1.png" />
+    <Image Include="Door2.png" />
+    <Image Include="Door3.png" />
+    <Image Include="EATop.png" />
+    <Image Include="EnemyArcher.png" />
+    <Image Include="GBTop.png" />
+    <Image Include="GMTop.png" />
+    <Image Include="GrassBlades.png" />
+    <Image Include="GreenBard.png" />
+    <Image Include="GreenMage.png" />
+    <Image Include="GreenRogue.png" />
+    <Image Include="GreenWarrior.png" />
+    <Image Include="GRTop.png" />
+    <Image Include="GWTop.png" />
+    <Image Include="HealthPotion.png" />
+    <Image Include="Knapsack.png" />
+    <Image Include="PitFullOfSpikes.png" />
+    <Image Include="PossibleKey1.png" />
+    <Image Include="PossibleKey1Varient1.png" />
+    <Image Include="PossibleKey1Varient2.png" />
+    <Image Include="PossibleKey2.png" />
+    <Image Include="PossibleKey2Varient1.png" />
+    <Image Include="PossibleKey2Varient2.png" />
+    <Image Include="PossibleKey3.png" />
+    <Image Include="PossibleKey3Varient1.png" />
+    <Image Include="PossibleKey3Varient2.png" />
+    <Image Include="Potion.png" />
+    <Image Include="Potion2.png" />
+    <Image Include="RBTop.png" />
+    <Image Include="RedBard.png" />
+    <Image Include="RedMage.png" />
+    <Image Include="RedRogue.png" />
+    <Image Include="RedWarrior.png" />
+    <Image Include="RMTop.png" />
+    <Image Include="RRTop.png" />
+    <Image Include="RWTop.png" />
+    <Image Include="Skeleton.png" />
+    <Image Include="SKTop.png" />
+    <Image Include="SMTop.png" />
+    <Image Include="StoneTrap.png" />
+    <Image Include="SwampMonster.png" />
+    <Image Include="Table.png" />
+    <Image Include="TripWire.png" />
+    <Image Include="Wizard.png" />
+    <Image Include="WizardMonster.png" />
+    <Image Include="WMTop.png" />
+    <Image Include="WoodBarrel.png" />
+    <Image Include="WTop.png" />
+    <Image Include="YBTop.png" />
+    <Image Include="YellowBard.png" />
+    <Image Include="YellowMage.png" />
+    <Image Include="YellowRogue.png" />
+    <Image Include="YellowWarrior.png" />
+    <Image Include="YMTop.png" />
+    <Image Include="YRTop.png" />
+    <Image Include="YWTop.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

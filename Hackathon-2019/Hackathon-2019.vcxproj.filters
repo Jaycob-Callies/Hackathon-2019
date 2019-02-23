@@ -33,4 +33,252 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="AssPoop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BarbarianMonster - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BarbarianMonster.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BarbarianMonsterTop - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BarbarianMonsterTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BBTop - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BBTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BlueBard - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BlueBard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BlueMage - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BlueMage.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BlueRogue - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BlueRogue.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BlueWarrior - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BlueWarrior.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BMTop - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BMTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BRTop - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BRTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BWTop - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="BWTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Chest - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Chest.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ChestTop - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ChestTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Door1 - Copy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Door1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Door2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Door3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="EATop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="EnemyArcher.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GBTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GMTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GrassBlades.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GreenBard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GreenMage.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GreenRogue.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GreenWarrior.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GRTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="GWTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="HealthPotion.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Knapsack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PitFullOfSpikes.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey1Varient1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey1Varient2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey2Varient1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey2Varient2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey3Varient1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="PossibleKey3Varient2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Potion.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Potion2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RBTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RedBard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RedMage.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RedRogue.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RedWarrior.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RMTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RRTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RWTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Skeleton.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SKTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SMTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="StoneTrap.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SwampMonster.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Table.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="TripWire.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Wizard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="WizardMonster.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="WMTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="WoodBarrel.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="WTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="YBTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="YellowBard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="YellowMage.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="YellowRogue.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="YellowWarrior.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="YMTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="YRTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="YWTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
