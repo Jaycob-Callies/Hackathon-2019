@@ -459,65 +459,9 @@ std::vector<int> characterx, charactery;
 	}
 }
 
-int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
+int miniGameKeyPuzzle(sf::RenderWindow &window)
 {
-	int correct_guess = 0;
-	sf::Texture key1Texture;
-	key1Texture.loadFromFile("PossibleKey1.png");
+	int correct_guess = 4;
 
-	sf::Sprite key1Sprite;
-	key1Sprite.setTexture(key1Texture);
-
-	window.draw(key1Sprite);
-	window.draw(key1Sprite);
-
-	sf::Texture key2Texture;
-	key2Texture.loadFromFile("PossibleKey2.png");
-
-	sf::Sprite key2Sprite;
-	key2Sprite.setTexture(key2Texture);
-
-	window.draw(key2Sprite);
-	window.draw(key2Sprite);
-
-	sf::Texture key3Texture;
-	key3Texture.loadFromFile("PossibleKey3.png");
-
-	sf::Sprite key3Sprite;
-	key3Sprite.setTexture(key1Texture);
-
-	window.draw(key3Sprite);
-	window.draw(key3Sprite);
-
-	
-	// wanting a memory matching game
-	
-	//put the images into an array, randomize the array
-
-	//have another image on top, that when selected it disapears until another is selected, and if they match both images disapear
-	//if not the same image, then the top image reappears ontop, and they have to select again
-	//continues until all the same images are matched
-
-	//exits
 	return correct_guess;
-}
-int miniGameDoorPuzzle(sf::RenderWindow &window /*unsure what else it might need*/)
-{
-	//opens a picture, displays it
-
-	// then the puzzle, the moving type, the picture is cut into 8 parts, having 9 sections
-
-	// 3 4 6
-	// 8 2 1
-	// 7 5
-
-	// v v v
-
-	// 1 2 3
-	// 4 5 6
-	// 7 8 
-
-	//can move the pieces to open slot. When the image matches the image shown then it is done
-
-	//would need to display both the original image and the cut up version
 }
