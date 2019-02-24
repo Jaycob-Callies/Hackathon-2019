@@ -5,7 +5,6 @@
 {
 	 //initialize values
 
-
 	 //initialize randomization
 	 srand(time(NULL));
 	

@@ -102,3 +102,4 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 int miniGameKeyPuzzle(sf::RenderWindow &window);
 int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double evasionDifficulty);
 int miniGameDodgeAttack(sf::RenderWindow &window);
+int chooseCharacter(sf::RenderWindow &window);
