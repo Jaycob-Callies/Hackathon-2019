@@ -249,5 +249,53 @@
     <Image Include="StoneWallCorners.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="OOF.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Dirt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="FireBall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="FireBolt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="FogCorners.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="FogCornersInverse.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Grass.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="IceBall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="IceBolt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="LightningBall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="LightningBolt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="WoodFenceCorners.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="WoodFloor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Shield.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Heart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Sword.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
