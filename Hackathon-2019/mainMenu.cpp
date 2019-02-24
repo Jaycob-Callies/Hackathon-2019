@@ -20,7 +20,7 @@ void mainMenu(sf::RenderWindow &window)
 		{
 			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed then...
 			{
-				if (sf::Mouse::getPosition().y > hMid + 1 * 32 * scaleF)//
+				if (sf::Mouse::getPosition().y > hMid + 1 * 32 * scaleF)
 				{
 					if (sf::Mouse::getPosition().x < hMid - window.getSize().x / 6)
 					{
