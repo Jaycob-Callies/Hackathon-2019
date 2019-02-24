@@ -36,7 +36,7 @@ int MiniGameEvasion(sf::Image character, int difficulty, sf::RenderWindow &windo
 int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, double difficulty)
 {
 	int doorsDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
-	int clicked = 0;
+	int time = 0, prevVel = 0;
 	double speed = difficulty * .1, scaleF = window.getSize().y / 32.0 / 8;
 	sf::Event event;
 	std::vector<int> obsticleLocations;
@@ -73,6 +73,8 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 	wallSprite.setScale(scaleF, scaleF);
 	wallSprite.setPosition(-hMid, -vMid);
 
+	sf::RectangleShape hitBox(sf::Vector2f(25*scaleF, 2*scaleF));
+
 	for (int i = 0; i < 4; i++)
 	{
 		obsticles.push_back(sf::Sprite(wallSprite));
@@ -86,20 +88,28 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 		}
 	}
 
-	while (walls != 0)
+	while (wallSprite.getPosition().x > -1 * distance * 32)
 	{
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::MouseButtonPressed)
-				clicked = 60;
+			{
+				time = 0;
+				prevVel = -20;
+			}
 		}
-		if (clicked > 0)
+		projectileSprite.move(0, prevVel + pow(2, 1.1));
+		prevVel = prevVel + pow(1.1, 2);
+
+		hitBox.setPosition(projectileSprite.getPosition().x + 5 * scaleF, projectileSprite.getPosition().y + 15 * scaleF);
+
+		for (int i = 0; i < obsticles.size(); i++)
 		{
-			projectileSprite.move(0, 2 -0.15 * pow((.13333333 * clicked - 4), 3));
-		}
-		else
-		{
-			projectileSprite.move(0, 10);
+			if (hitBox.getGlobalBounds().intersects(obsticles.at(i).getGlobalBounds()) && obsticles.at(i).getColor() != sf::Color::Blue)
+			{
+				doorsDodged--;
+				obsticles.at(i).setColor(sf::Color::Blue);
+			}
 		}
 		window.clear();
 		backgroundSprite.move(-1 * scaleF, 0);
@@ -110,8 +120,11 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 			obsticles.at(i).move(-1.0 * scaleF, 0.0);
 			window.draw(obsticles.at(i));
 		}
+		if (obsticles.at(7).getPosition().x < 0)
+		{
+			return doorsDodged;
+		}
 		window.display();
-		clicked--;
+		time++;
 	}
-	return doorsDodged;
 }
