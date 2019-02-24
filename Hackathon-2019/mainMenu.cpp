@@ -1,8 +1,12 @@
 #include "Header.h"
 
+
+int vMid = 0, hMid = 0; //Variable Declaration.
+double scaleF = window.getSize().y / 32.0 / 8;
+
 //Shows user 3 options on menu, play game which allows user to play main DnD game, "options" which allows user to play mini games, and exit.
 
-sf::Event event1;
+sf::Event event;
 
 //while (true)
 //{
