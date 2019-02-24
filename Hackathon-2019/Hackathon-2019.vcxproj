@@ -200,6 +200,7 @@
     <Image Include="StoneTrap.png" />
     <Image Include="StoneWallCorners.png" />
     <Image Include="SwampMonster.png" />
+    <Image Include="Sword.png" />
     <Image Include="Table.png" />
     <Image Include="TripWire.png" />
     <Image Include="Wizard.png" />

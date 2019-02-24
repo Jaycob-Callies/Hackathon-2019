@@ -64,6 +64,7 @@
 				else if (sf::Mouse::getPosition().x < hMid && sf::Mouse::getPosition().y >= vMid)//bottom left
 				{
 					shape.setFillColor(sf::Color::Blue);
+					MiniGameEvasion(window);
 				}
 				else //bottom right
 				{
