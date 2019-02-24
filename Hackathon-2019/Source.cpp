@@ -44,6 +44,18 @@ int main()
 	sf::Image arrow;
 	arrow.loadFromFile("Arrow.png");
 
+	Image wizardMonster;
+	wizardMonster.loadFromFile("WizardMonster.png");
+
+	Image SwampMonster;
+	SwampMonster.loadFromFile("SwampMonser.png");
+
+	Image Skeleton;
+	Skeleton.loadFromFile("Skeleton.png");
+
+	Image RedBard;
+	RedBard.loadFromFile("RedBard.png");
+
 	while (window.isOpen())
 	{
 
@@ -58,6 +70,7 @@ int main()
 				else if (sf::Mouse::getPosition().x >= hMid && sf::Mouse::getPosition().y < vMid)//top right
 				{
 					shape.setFillColor(sf::Color::Red);
+					miniGameDodgeAttack(window);
 				}
 				else if (sf::Mouse::getPosition().x < hMid && sf::Mouse::getPosition().y >= vMid)//bottom left
 				{
@@ -66,7 +79,7 @@ int main()
 				else //bottom right
 				{
 					shape.setFillColor(sf::Color::Yellow);
-					miniGameRangedAttack(arrow , window, 1.0);
+					//miniGameRangedAttack(arrow , window, 1.0);
 				}
 			}
 			if (event.type == sf::Event::Closed)

@@ -8,5 +8,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <math.h>
+using namespace sf;
 
-int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, double difficulty);
+//int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, double difficulty);
+int miniGameDodgeAttack(RenderWindow &window);
