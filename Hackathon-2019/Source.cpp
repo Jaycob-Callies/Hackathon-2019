@@ -7,6 +7,9 @@ int main()
 	sf::Event event;
 	sf::Vector2f quadrant;
 
+	//initialize randomization
+	srand(time(NULL));
+
 	//create fullscreen window size of users screen
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
 	window.create(sf::VideoMode(sf::VideoMode::getFullscreenModes().at(0)), "SFML Window", sf::Style::Fullscreen);
@@ -39,7 +42,7 @@ int main()
 
 	//load images
 	sf::Image arrow;
-	//arrow.loadFromFile("HealthPotion.png");
+	arrow.loadFromFile("Arrow.png");
 
 	while (window.isOpen())
 	{

@@ -10,8 +10,7 @@
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <UniqueIdentifier>{e2e9525c-33bb-4fca-b07d-c3c10d544549}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,82 +33,46 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="AssPoop.png">
+    <Image Include="Arrow.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="BarbarianMonster - Copy.png">
+    <Image Include="AssPoop.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="BarbarianMonster.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="BarbarianMonsterTop - Copy.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="BarbarianMonsterTop.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="BBTop - Copy.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="BBTop.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="BlueBard - Copy.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="BlueBard.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="BlueMage - Copy.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="BlueMage.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="BlueRogue - Copy.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="BlueRogue.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="BlueWarrior - Copy.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="BlueWarrior.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="BMTop - Copy.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="BMTop.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="BRTop - Copy.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="BRTop.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="BWTop - Copy.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="BWTop.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Chest - Copy.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Chest.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="ChestTop - Copy.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="ChestTop.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Door1 - Copy.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Door1.png">
@@ -278,6 +241,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="YWTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="StoneTile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="StoneWallCorners.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
