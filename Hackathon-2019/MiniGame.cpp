@@ -34,7 +34,7 @@ int MiniGameEvasion(sf::RenderWindow &window)
 	characterPos.x = 50;
 	characterPos.y = CHARACTER_Y_BOTTOM;
 
-	int index = 0;
+	int index = 0, amountOfCorrectResponses = 0;
 	float frame = 0.f, frameSpeed = 0.4f;
 	const int changeCount = 5;
 
@@ -152,6 +152,7 @@ int MiniGameEvasion(sf::RenderWindow &window)
 
 	return amountOfCorrectResponses;
 }
+
 int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty)
 {
 	int doorsDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
@@ -179,11 +180,15 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 	projectileSprite.setTexture(projectileTexture);
 	projectileSprite.setScale(scaleF, scaleF);
 
+	sf::RectangleShape whiteScreen(sf::Vector2f(window.getSize().x, window.getSize().y));
+	whiteScreen.setFillColor(sf::Color::White);
+
 	sf::Texture backgroundTexture;
-	backgroundTexture.loadFromFile("StoneTile.png");
+	backgroundTexture.loadFromFile("WoodFloor.png");
 	backgroundTexture.setRepeated(true);
 	sf::Sprite backgroundSprite(backgroundTexture, sf::IntRect(0,0,distance*32,8*32));
 	backgroundSprite.setScale(scaleF, scaleF);
+	backgroundSprite.setColor(sf::Color::Color(255, 220, 190, 220));
 
 	sf::Texture wallTexture;
 	wallTexture.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 32, 32, 32));
@@ -191,7 +196,7 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 	sf::Sprite wallSprite(wallTexture, sf::IntRect(0, 0, 32, 8 * 32));
 	wallSprite.setScale(scaleF, scaleF);
 	wallSprite.setPosition(-hMid, -vMid);
-	wallSprite.setColor(sf::Color::Color(222, 184, 135, 255));
+
 
 	//hitbox
 	sf::RectangleShape hitBox(sf::Vector2f(25*scaleF, 2*scaleF));
@@ -253,6 +258,7 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 
 		//draw all sprites
 		window.clear();
+		window.draw(whiteScreen);
 		backgroundSprite.move(-1 * scaleF, 0);
 		window.draw(backgroundSprite);
 		window.draw(projectileSprite);
@@ -274,6 +280,7 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 	}
 	return doorsDodged;
 }
+
 int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
 {
 	int correct_guess = 0;
@@ -307,6 +314,4 @@ int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
 	
 
 	return correct_guess;
-}
-	return 0;
 }
