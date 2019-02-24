@@ -183,6 +183,7 @@
     <Image Include="RMTop.png" />
     <Image Include="RRTop.png" />
     <Image Include="RWTop.png" />
+    <Image Include="Shield.png" />
     <Image Include="Skeleton.png" />
     <Image Include="SKTop.png" />
     <Image Include="SMTop.png" />
