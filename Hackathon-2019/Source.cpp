@@ -1,6 +1,7 @@
 #include "Header.h"
 
-int main()
+
+ int main()
 {
 	//initialize values
 	int hMid = 0, vMid = 0, flag = 0;
@@ -44,6 +45,18 @@ int main()
 	sf::Image arrow;
 	arrow.loadFromFile("Arrow.png");
 
+	Image wizardMonster;
+	wizardMonster.loadFromFile("WizardMonster.png");
+
+	Image SwampMonster;
+	SwampMonster.loadFromFile("SwampMonser.png");
+
+	Image Skeleton;
+	Skeleton.loadFromFile("Skeleton.png");
+
+	Image RedBard;
+	RedBard.loadFromFile("RedBard.png");
+
 
 	while (window.isOpen())
 	{
@@ -59,6 +72,7 @@ int main()
 				else if (sf::Mouse::getPosition().x >= hMid && sf::Mouse::getPosition().y < vMid)//top right
 				{
 					shape.setFillColor(sf::Color::Red);
+					miniGameDodgeAttack(window);
 				}
 				else if (sf::Mouse::getPosition().x < hMid && sf::Mouse::getPosition().y >= vMid)//bottom left
 				{
@@ -68,7 +82,21 @@ int main()
 				else //bottom right
 				{
 					shape.setFillColor(sf::Color::Yellow);
-					miniGameRangedAttack(arrow , window, 1.0);
+					switch (rand() % 4)
+					{
+					case 1:
+						miniGameRangedAttack("FireBolt.png", window, 1.0);
+						break;
+					case 2:
+						miniGameRangedAttack("LightningBolt.png", window, 1.0);
+						break;
+					case 3:
+						miniGameRangedAttack("IceBolt.png", window, 1.0);
+						break;
+					default:
+						miniGameRangedAttack("Arrow.png", window, 1.0);
+						break;
+					}
 				}
 			}
 			if (event.type == sf::Event::Closed)

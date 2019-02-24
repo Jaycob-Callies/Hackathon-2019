@@ -104,7 +104,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\SFML\lib;C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\string.h</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics.lib;sfml-audio.lib;sfml-system.lib;sfml-window.lib;sfml-network.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -146,13 +146,19 @@
     <Image Include="BWTop.png" />
     <Image Include="Chest.png" />
     <Image Include="ChestTop.png" />
+    <Image Include="Dirt.png" />
     <Image Include="Door1.png" />
     <Image Include="Door2.png" />
     <Image Include="Door3.png" />
     <Image Include="EATop.png" />
     <Image Include="EnemyArcher.png" />
+    <Image Include="FireBall.png" />
+    <Image Include="FireBolt.png" />
+    <Image Include="FogCorners.png" />
+    <Image Include="FogCornersInverse.png" />
     <Image Include="GBTop.png" />
     <Image Include="GMTop.png" />
+    <Image Include="Grass.png" />
     <Image Include="GrassBlades.png" />
     <Image Include="GreenBard.png" />
     <Image Include="GreenMage.png" />
@@ -161,7 +167,12 @@
     <Image Include="GRTop.png" />
     <Image Include="GWTop.png" />
     <Image Include="HealthPotion.png" />
+    <Image Include="Heart.png" />
+    <Image Include="IceBall.png" />
+    <Image Include="IceBolt.png" />
     <Image Include="Knapsack.png" />
+    <Image Include="LightningBall.png" />
+    <Image Include="LightningBolt.png" />
     <Image Include="OOF.png" />
     <Image Include="PitFullOfSpikes.png" />
     <Image Include="PossibleKey1.png" />
@@ -183,6 +194,7 @@
     <Image Include="RMTop.png" />
     <Image Include="RRTop.png" />
     <Image Include="RWTop.png" />
+    <Image Include="Shield.png" />
     <Image Include="Skeleton.png" />
     <Image Include="SKTop.png" />
     <Image Include="SMTop.png" />
@@ -190,12 +202,15 @@
     <Image Include="StoneTrap.png" />
     <Image Include="StoneWallCorners.png" />
     <Image Include="SwampMonster.png" />
+    <Image Include="Sword.png" />
     <Image Include="Table.png" />
     <Image Include="TripWire.png" />
     <Image Include="Wizard.png" />
     <Image Include="WizardMonster.png" />
     <Image Include="WMTop.png" />
     <Image Include="WoodBarrel.png" />
+    <Image Include="WoodFenceCorners.png" />
+    <Image Include="WoodFloor.png" />
     <Image Include="WTop.png" />
     <Image Include="YBTop.png" />
     <Image Include="YellowBard.png" />
