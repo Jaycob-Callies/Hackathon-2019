@@ -167,6 +167,7 @@
     <Image Include="GRTop.png" />
     <Image Include="GWTop.png" />
     <Image Include="HealthPotion.png" />
+    <Image Include="Heart.png" />
     <Image Include="IceBall.png" />
     <Image Include="IceBolt.png" />
     <Image Include="Knapsack.png" />
