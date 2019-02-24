@@ -307,179 +307,226 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 
 
 
-int miniGameDodgeAttack(sf::RenderWindow &window)
-{
-	int limit = 0, direction = 0, direction2 = 0, direction3 = 0, randYValue = 0, randValue = 0, score = 0, clicked = 4;
-double scaleF = window.getSize().y / 32.0 / 8;
-std::vector<int> characterx, charactery;
 
-	//set locations of obsticles based on reandom values
+int miniGameDodgeAttack(sf::RenderWindow &window) {
+	//initialize
+	int limit = 0, direction = 0, direction2 = 0, direction3 = 0, direction4 = 0, randYValue = 0, randValue = 0, score = 0;
+	double scaleF = window.getSize().y / 32.0 / 8;
+	std::vector<int>  time;
+	std::vector<double> characterx, charactery;
+	sf::Event event;
 	for (int i = 0; i < 4; i++)
 	{
-		characterx.push_back(rand() % (window.getSize().x));
-		charactery.push_back(rand() % (window.getSize().y));
+		time.push_back(30+rand()%60);
+		characterx.push_back(rand() % window.getSize().x/time.at(i));
+		charactery.push_back(rand() % window.getSize().y / time.at(i));
+		switch (rand() % 4)
+		{
+		case 1:
+			characterx.at(i) = -1*characterx.at(i);
+			charactery.at(i) = charactery.at(i);
+			break;
+			
+		case 2: 
+			characterx.at(i) = characterx.at(i);
+			charactery.at(i) = -1 * charactery.at(i);
+			break;
+		case 3: 
+			characterx.at(i) = -1 * characterx.at(i);
+			charactery.at(i) = -1 * charactery.at(i);
+			break;
+		default:
+			characterx.at(i) = characterx.at(i);
+			charactery.at(i) = charactery.at(i);
+			break;
+		}
 	}
+
+	//texturez
+	sf::Texture StoneTile;
+	StoneTile.loadFromFile("StoneTile.png");
+	StoneTile.setRepeated(true);
+	sf::Sprite StoneBackground(StoneTile, sf::IntRect(0,0,window.getSize().x/scaleF, window.getSize().y / scaleF));
+	StoneBackground.setScale(scaleF, scaleF);
 
 	sf::Texture attacker1;
 	attacker1.loadFromFile("WizardMonster.png");
 	sf::Sprite attackerSprite;
 	attackerSprite.setTexture(attacker1);
-	attackerSprite.setScale(scaleF*5, scaleF*5);
-	attackerSprite.setPosition(Vector2f(characterx.at(0), charactery.at(0)));
-		
+	attackerSprite.setScale(scaleF * 5, scaleF * 5);
+	attackerSprite.setPosition(Vector2f(rand()%window.getSize().x, rand() % window.getSize().y));
+
 	sf::Texture attacker2;
 	attacker2.loadFromFile("Skeleton.png");
 	sf::Sprite attackerSprite2;
 	attackerSprite2.setTexture(attacker2);
-	attackerSprite2.setScale(scaleF * 5, scaleF * 5);
-	attackerSprite2.setPosition(Vector2f(characterx.at(1), charactery.at(1)));
+	attackerSprite2.setScale(scaleF * 2, scaleF * 2);
+	attackerSprite2.setPosition(Vector2f(rand() % window.getSize().x, rand() % window.getSize().y));
 
 	sf::Texture attacker3;
 	attacker3.loadFromFile("SwampMonster.png");
 	sf::Sprite attackerSprite3;
 	attackerSprite3.setTexture(attacker3);
-	attackerSprite3.setScale(scaleF * 2, scaleF * 2);
+	attackerSprite3.setScale(scaleF * 1, scaleF * 1);
 	attackerSprite3.setPosition(Vector2f(0, 10.f));
-	attackerSprite3.setPosition(Vector2f(characterx.at(2), charactery.at(2)));
+	attackerSprite3.setPosition(Vector2f(rand() % window.getSize().x, rand() % window.getSize().y));
 
 	sf::Texture treasure;
 	treasure.loadFromFile("HealthPotion.png");
 	sf::Sprite treasureSprite;
 	treasureSprite.setTexture(treasure);
-	treasureSprite.setScale(scaleF * 4, scaleF * 4);
-	treasureSprite.setPosition(Vector2f(characterx.at(3), charactery.at(3)));
-	
+	treasureSprite.setScale(scaleF * .75, scaleF * .75);
+	treasureSprite.setPosition(Vector2f(rand() % window.getSize().x, rand() % window.getSize().y));
+
 	CircleShape attacker;
 	bool isHit = false;
 	attacker.setRadius(10.f);
 	attacker.setFillColor(Color::Black);
-	attacker.setPosition(Vector2f(0, window.getSize().y - attacker.getRadius() * 3));
+	attacker.setPosition(Vector2f(0, 0));
 
+	//hitbox of potion
+	//sf::hitBox.setPosition(treasureSprite.getPosition().x + 5 * scaleF, treasureSprite.getPosition().y + 15 * scaleF);
+	
+	//loop
+	while (limit < 300)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			if (time.at(i) <= 0)
+			{
+				time.at(i)=(30 + rand() % 60);
+				characterx.push_back(rand() % window.getSize().y);
+				charactery.push_back(rand() % window.getSize().y);
+				switch (rand() % 4)
+				{
+				case 1:
+					characterx.at(i) = -1 * characterx.at(i);
+					charactery.at(i) = charactery.at(i);
+					break;
 
-	while (limit < 9) {
-		sf::Event event;
-		while (window.pollEvent(event)) {
+				case 2:
+					characterx.at(i) = characterx.at(i);
+					charactery.at(i) = -1 * charactery.at(i);
+					break;
+				case 3:
+					characterx.at(i) = -1 * characterx.at(i);
+					charactery.at(i) = -1 * charactery.at(i);
+					break;
+				default:
+					characterx.at(i) = characterx.at(i);
+					charactery.at(i) = charactery.at(i);
+					break;
+				}
+			}
+		}
+		//check windowClose
+		while (window.pollEvent(event))
+		{
 			if (event.type == sf::Event::Closed)
-					window.close();
+				window.close();
 		}
 
-			//hitPlace update
-		if (attackerSprite.getPosition().x <= 0 ) {
-			direction = 1;
+		if (attackerSprite.getPosition().x <= 0 || attackerSprite.getPosition().x > window.getSize().x) {
+			characterx.at(0) = -1 * characterx.at(0);
 			limit++;
 		}
-		else if (attackerSprite.getPosition().x >= window.getSize().x) {
-				direction = 0;
+		if (attackerSprite.getPosition().y >= window.getSize().y || attackerSprite.getPosition().y < 0) {
+			charactery.at(0) = -1 * charactery.at(0);
+			limit++;
 		}
-		if (direction == 0) {
-			attackerSprite.move(-5.f, 0);
+		if (attackerSprite2.getPosition().x <= 0 || attackerSprite2.getPosition().x > window.getSize().x) {
+			characterx.at(1) = -1 * characterx.at(1);
+			limit++;
 		}
-		else {
-			attackerSprite.move(5.f, 0);
+		if (attackerSprite2.getPosition().y >= window.getSize().y || attackerSprite2.getPosition().y < 0) {
+			charactery.at(1) = -1 * charactery.at(1);
+			limit++;
 		}
-
-
-		if (treasureSprite.getPosition().x <= 0 || treasureSprite.getPosition().y <= 0) {
-			direction = 1;
+		if (attackerSprite3.getPosition().x <= 0 || attackerSprite3.getPosition().x > window.getSize().x) {
+			characterx.at(2) = -1 * characterx.at(2);
+			limit++;
 		}
-		else if (treasureSprite.getPosition().x >= window.getSize().x || treasureSprite.getPosition().y >= window.getSize().y) {
-			direction = 0;			}
-		if (direction == 0) {
-			treasureSprite.move(-10.f, 4.f);
+		if (attackerSprite3.getPosition().y >= window.getSize().y || attackerSprite3.getPosition().y < 0) {
+			charactery.at(2) = -1 * charactery.at(2);
+			limit++;
 		}
-		else {
-			treasureSprite.move(15.f, 3.f);
+		if (treasureSprite.getPosition().x <= 0 || treasureSprite.getPosition().x > window.getSize().x) {
+			characterx.at(3) = -1 * characterx.at(3);
+			limit++;
 		}
-		if (attackerSprite2.getPosition().y <= 0) {
-			direction2 = 1;
+		if (treasureSprite.getPosition().y >= window.getSize().y || treasureSprite.getPosition().y < 0) {
+			charactery.at(3) = -1 * charactery.at(3);
+			limit++;
 		}
-		else if (attackerSprite2.getPosition().y >= window.getSize().y) {
-			direction2 = 0;
-		}
-		if (direction2 == 0) {
-			attackerSprite2.move(-10.f, -10.f);
-		}
-		else {
-			attackerSprite2.move(10.f, 10.f);
-		}
-		if (attackerSprite3.getPosition().y <= 0 || attackerSprite3.getPosition().x <= 0) {
-			direction3 = 1;
-		}
-		else if ((attackerSprite3.getPosition().x >= window.getSize().x) ||
-			(attackerSprite3.getPosition().y >= window.getSize().y)) {
-			direction3 = 0;
-			}
-		if (direction3 == 0) {
-			attackerSprite3.move(-5.f, -2.f);
-		}
-		else {
-			attackerSprite3.move(10.f, 10.f);
-		}
-
+		
+		//enemy move
+		attackerSprite.move(sf::Vector2f(characterx.at(0), charactery.at(0)));
+		attackerSprite2.move(sf::Vector2f(characterx.at(1), charactery.at(1)));
+		attackerSprite3.move(sf::Vector2f(characterx.at(2), charactery.at(2)));
+		treasureSprite.move(sf::Vector2f(characterx.at(3), charactery.at(3)));
 
 		//update attack
-
 		if (!isHit) {
 			attacker.setPosition(Mouse::getPosition(window).x, Mouse::getPosition(window).y);
 		}
-		else {
-			attacker.move(0, -7.f);
-		}
-	}
-		//collison 
-			
+
 		if (attacker.getGlobalBounds().intersects(attackerSprite.getGlobalBounds())) {
 			//reset 
 			isHit = false;
-			
-			randYValue = rand() % 100 + 1;
+			randYValue = rand() % window.getSize().y;
 			randValue = randYValue;
 			attackerSprite.setPosition(Vector2f(attackerSprite.getPosition().x, randValue));
+			++limit;
 			score--;
 		}
+
 		if (attacker.getGlobalBounds().intersects(attackerSprite2.getGlobalBounds())) {
 			//reset 
 			isHit = false;
-				
-			randYValue = rand() % 100 + 1;
+			randYValue = rand() % window.getSize().y;
 			randValue = randYValue;
 			attackerSprite2.setPosition(Vector2f(attackerSprite2.getPosition().x, randValue));
-			score--;
+			++limit;
+			score--; //score for if you want to implement 
 		}
 		if (attacker.getGlobalBounds().intersects(attackerSprite3.getGlobalBounds())) {
 			//reset 
 			isHit = false;
-
-			randYValue = rand() % 100 + 1;
+			randYValue = rand() % window.getSize().y;
 			randValue = randYValue;
 			attackerSprite3.setPosition(Vector2f(attackerSprite3.getPosition().x, randValue));
+			++limit;
 			score--;
-
+		}
 		if (treasureSprite.getGlobalBounds().intersects(attacker.getGlobalBounds())) {
-				//reset 
+			//reset 
 			isHit = false;
-				
-			randYValue = rand() % (int)scaleF * 32 * 8 + 1;
+
+			randYValue = rand() % window.getSize().y;
 			randValue = randYValue;
+			randYValue = rand() % window.getSize().y;
 			treasureSprite.setPosition(Vector2f(randYValue, randValue));
 			randValue = rand() % 6;
-			treasureSprite.move(3.f, randValue);
+			
 			score = score + 2;
 			limit++;
 		}
 
 
-		//if not display next frame
+		window.clear();
+		window.draw(StoneBackground);
 		window.draw(attackerSprite);
 		window.draw(attackerSprite2);
-		window.draw(attackerSprite3);
-			
 		window.draw(attackerSprite3);
 		window.draw(treasureSprite);
 		window.draw(attacker);
 		window.display();
-		clicked--;
+		for (int i = 0; i < 4; i++)
+		{
+			time.at(i)--;
+		}
 	}
+	return 0;
 }
 
 int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
@@ -512,9 +559,9 @@ int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
 	window.draw(key3Sprite);
 	window.draw(key3Sprite);
 
-	
+
 	// wanting a memory matching game
-	
+
 	//put the images into an array, randomize the array
 
 	//have another image on top, that when selected it disapears until another is selected, and if they match both images disapear
