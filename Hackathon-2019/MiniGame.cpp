@@ -1,7 +1,4 @@
 #include "Header.h"
-using namespace sf;
-#define WIDTH 1500
-#define HEIGHT 750
 
 struct Position
 {
@@ -9,59 +6,106 @@ struct Position
 	int y;
 };
 
-int MiniGameEvasion(sf::Image characterImage, sf::RenderWindow &window, double evasionDifficulty)
+//Raise floor a touch higher. (Done)
+//Alter "obsticles" to be random non-moving sprites. (Done)
+//Alter jumping ability to only jump when feet touching ground or platform instead of multiple double jumps. (Done) 
+//Alter hitbox to fit average character build. 
+//Make program functional.
+
+int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double evasionDifficulty)
 {
-	//sf::Image character, int difficulty, sf::RenderWindow &window
 	window.setFramerateLimit(60);
 
-	int doorsDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
-	int time = 0, prevVel = 0;
+	int obstaclesDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
+	int time = 0, prevVel = 0, onFloor = 0;
 	double speed = evasionDifficulty * .1, scaleF = window.getSize().y / 32.0 / 8;
 	sf::Event event;
-	std::vector<int> obsticleLocations;
-	std::vector<double> obsticleHeights;
-	std::vector<sf::Sprite> obsticles;
+	std::vector<int> obstacleLocations;
+	std::vector<sf::Sprite> obstacles;
 
 	for (int i = 0; i < 4; i++)
 	{
-		obsticleLocations.push_back(6 + (rand() % 8));
-		obsticleHeights.push_back(rand() % window.getSize().y);
+		obstacleLocations.push_back(6 + (rand() % 8));
 	}
 
-	distance = obsticleLocations.at(0) + obsticleLocations.at(1) + obsticleLocations.at(2) + obsticleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32 / scaleF;
+	distance = obstacleLocations.at(0) + obstacleLocations.at(1) + obstacleLocations.at(2) + obstacleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32 / scaleF;
 
 	sf::Texture characterTexture;
-	characterTexture.loadFromFile("YellowWarrior.png"); //Maybe randomize characters if time allows.
+	characterTexture.loadFromFile("YellowWarrior.png");
 	sf::Sprite characterSprite;
 	characterSprite.setTexture(characterTexture);
 	characterSprite.setScale(scaleF, scaleF);
 
 	sf::Texture backgroundTexture;
-	backgroundTexture.loadFromFile("StoneTile.png"); //Also maybe randomize enemies and obstacles if time allows.
+	backgroundTexture.loadFromFile("StoneWallCorners.png", sf::IntRect(32, 0, 32, 32));
 	backgroundTexture.setRepeated(true);
 	sf::Sprite backgroundSprite(backgroundTexture, sf::IntRect(0, 0, distance * 32, 8 * 32));
 	backgroundSprite.setScale(scaleF, scaleF);
 
-	sf::Texture wallTexture;
-	wallTexture.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 32, 32, 32));
-	wallTexture.setRepeated(true);
-	sf::Sprite wallSprite(wallTexture, sf::IntRect(0, 0, 32, 8 * 32));
-	wallSprite.setScale(scaleF, scaleF);
-	wallSprite.setPosition(-hMid, -vMid);
+	sf::Texture obstacleTexture;
+	obstacleTexture.loadFromFile("PitFullOfSpikes.png");
+	sf::Sprite obstacleSprite;
+	obstacleSprite.setTexture(obstacleTexture);
+	obstacleSprite.setScale(scaleF, scaleF);
 
+	sf::Texture obstacle1Texture;
+	obstacle1Texture.loadFromFile("TripWire.png");
+	sf::Sprite obstacle1Sprite;
+	obstacle1Sprite.setTexture(obstacle1Texture);
+	obstacle1Sprite.setScale(scaleF, scaleF);
+
+	sf::Texture obstacle2Texture;
+	obstacle2Texture.loadFromFile("OOF.png");
+	sf::Sprite obstacle2Sprite;
+	obstacle2Sprite.setTexture(obstacle2Texture);
+	obstacle2Sprite.setScale(scaleF, scaleF);
+
+	sf::Texture obstacle3Texture;
+	obstacle3Texture.loadFromFile("IceBolt.png");
+	sf::Sprite obstacle3Sprite;
+	obstacle3Sprite.setTexture(obstacle3Texture);
+	obstacle3Sprite.setScale(scaleF, scaleF);
+
+	sf::Texture obstacle4Texture;
+	obstacle4Texture.loadFromFile("AssPoop.png");
+	sf::Sprite obstacle4Sprite;
+	obstacle4Sprite.setTexture(obstacle4Texture);
+	obstacle4Sprite.setScale(scaleF, scaleF);
+
+	//sf::Texture wallTexture;
+	//wallTexture.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 32, 32, 32));
+	//wallTexture.setRepeated(true);
+	//sf::Sprite wallSprite(wallTexture, sf::IntRect(0, 0, 32, 8 * 32));
+	//wallSprite.setScale(scaleF, scaleF);
+	//wallSprite.setPosition(-hMid, -vMid);
+	
 	sf::RectangleShape hitBox(sf::Vector2f(25 * scaleF, 2 * scaleF));
 
 	//set locations of obsticles based on reandom values
 	for (int i = 0; i < 4; i++)
 	{
-		obsticles.push_back(sf::Sprite(wallSprite));
-		obsticles.at(2 * i).setPosition(obsticleLocations.at(i) * 32 * scaleF, obsticleHeights.at(i) + 48 * scaleF);
-		obsticles.push_back(sf::Sprite(wallSprite));
-		obsticles.at(2 * i + 1).setPosition(obsticleLocations.at(i) * 32 * scaleF, obsticleHeights.at(i) - window.getSize().y);
+		switch (rand() % 5)//obstacles i want)
+		{
+		case 1:
+			obstacles.push_back(sf::Sprite(obstacleSprite));//Sprite of first random
+			break;
+		case 2:
+			obstacles.push_back(sf::Sprite(obstacle1Sprite));//Sprite of first random
+			break;
+		case 3:
+			obstacles.push_back(sf::Sprite(obstacle2Sprite));//Sprite of first random
+			break;
+		case 4:
+			obstacles.push_back(sf::Sprite(obstacle3Sprite));//Sprite of first random
+			break;
+		default:
+			obstacles.push_back(sf::Sprite(obstacle4Sprite));//Sprite of first random
+			break;
+		}
+		obstacles.at(i).setPosition(obstacleLocations.at(i) * 32.0 * scaleF,window.getSize().y-scaleF * 8);
 		if (i > 0)//offset the concurrent onsticles so they dont stack
 		{
-			obsticles.at(2 * i).move(obsticles.at(2 * i - 2).getPosition().x, 0);
-			obsticles.at(2 * i + 1).move(obsticles.at(2 * i - 1).getPosition().x, 0);
+			obstacles.at(i).move(obstacles.at(i - 1).getPosition().x, 0);
 		}
 	}
 
@@ -73,25 +117,37 @@ int MiniGameEvasion(sf::Image characterImage, sf::RenderWindow &window, double e
 		{
 			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
 			{
-				time = 0;
-				prevVel = -20;
+				if (onFloor == 1)
+				{
+					onFloor = 0;
+					time = 0;
+					prevVel = -20;
+				}
 			}
 		}
 
 		//exponentially decrease trajectory simulating gravity
-		characterSprite.move(0, prevVel + pow(2, 1.1));
+		characterSprite.move(0, (prevVel + pow(2, 1.1)) * 4);
 		prevVel = prevVel + pow(1.1, 2);
+
+		//bound arrow to stay on screen
+
+		if (characterSprite.getPosition().y > window.getSize().y + -30 * scaleF)
+		{
+			characterSprite.setPosition(0, window.getSize().y - 30 * scaleF);
+			onFloor = 1;
+		}
 
 		//set hitbox on stem of arrow
 		hitBox.setPosition(characterSprite.getPosition().x + 5 * scaleF, characterSprite.getPosition().y + 15 * scaleF);
 
 		//check if hitbox intersects an obsticle
-		for (int i = 0; i < obsticles.size(); i++)
+		for (int i = 0; i < obstacles.size(); i++)
 		{
-			if (hitBox.getGlobalBounds().intersects(obsticles.at(i).getGlobalBounds()) && obsticles.at(i).getColor() != sf::Color::Blue)
+			if (hitBox.getGlobalBounds().intersects(obstacles.at(i).getGlobalBounds()) && obstacles.at(i).getColor() != sf::Color::Blue)
 			{
-				doorsDodged--;
-				obsticles.at(i).setColor(sf::Color::Blue);
+				obstaclesDodged--;
+				obstacles.at(i).setColor(sf::Color::Blue);
 			}
 		}
 
@@ -100,26 +156,27 @@ int MiniGameEvasion(sf::Image characterImage, sf::RenderWindow &window, double e
 		backgroundSprite.move(-1 * scaleF, 0);
 		window.draw(backgroundSprite);
 		window.draw(characterSprite);
-		for (int i = 0; i < obsticles.size(); i++)
+
+		for (int i = 0; i < obstacles.size(); i++)
 		{
-			obsticles.at(i).move(-1.0 * scaleF, 0.0);
-			window.draw(obsticles.at(i));
+			obstacles.at(i).move(-1.0 * scaleF, 0.0);
+			window.draw(obstacles.at(i));
 		}
 
 		//if the last sprite moves off screen exit
-		if (obsticles.at(7).getPosition().x < 0)
+		if (obstacles.at(obstacles.size()-1).getPosition().x < 0)
 		{
-			return doorsDodged;
+			return obstaclesDodged;
 		}
 
 		//if not display next frame
 		window.display();
 		time++;
 	}
-	return doorsDodged;
+	return obstaclesDodged;
 }
 
-int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, double difficulty)
+int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty)
 {
 	int doorsDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
 	int time = 0, prevVel = 0;
