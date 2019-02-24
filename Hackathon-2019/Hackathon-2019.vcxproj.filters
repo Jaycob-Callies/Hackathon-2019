@@ -252,5 +252,8 @@
     <Image Include="OOF.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Sword.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

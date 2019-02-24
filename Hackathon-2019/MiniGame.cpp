@@ -134,30 +134,23 @@ int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
 	int correct_guess = 0;
 	sf::Texture key1Texture;
 	key1Texture.loadFromFile("PossibleKey1.png");
-
 	sf::Sprite key1Sprite;
 	key1Sprite.setTexture(key1Texture);
 
-	window.draw(key1Sprite);
-	window.draw(key1Sprite);
 
 	sf::Texture key2Texture;
 	key2Texture.loadFromFile("PossibleKey2.png");
-
 	sf::Sprite key2Sprite;
 	key2Sprite.setTexture(key2Texture);
 
-	window.draw(key2Sprite);
-	window.draw(key2Sprite);
 
 	sf::Texture key3Texture;
 	key3Texture.loadFromFile("PossibleKey3.png");
-
 	sf::Sprite key3Sprite;
 	key3Sprite.setTexture(key1Texture);
 
-	window.draw(key3Sprite);
-	window.draw(key3Sprite);
+
+
 
 	
 
