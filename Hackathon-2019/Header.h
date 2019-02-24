@@ -18,6 +18,9 @@
 using namespace std;
 using namespace sf;
 
+
+
+
 struct stats {
 	int health;
 	int maxHealth;
@@ -65,7 +68,7 @@ public:
 				}
 				i++;
 			}
-			switch (rand() % 8)
+			switch (rand() % 16)
 			{
 			case 0:
 				if (floorType < 2)
@@ -116,6 +119,9 @@ public:
 		if (pRight == NULL)
 			pRight = new(Room);
 	}
+	bool getExplore() {
+		return explored;
+	}
 	Room* getpTop() {
 		return pTop;
 	}	
@@ -135,6 +141,9 @@ public:
 	int getRoomType()
 	{
 		return roomType;
+	}
+	void kill() {
+		roomType = 3;
 	}
 	void draw(int startx, int starty, sf::RenderWindow &window)
 	{
@@ -326,4 +335,5 @@ int miniGameDodgeAttack(sf::RenderWindow &window);
 void beachBall(sf::RenderWindow &window);
 void mainMenu(sf::RenderWindow &window);
 std::vector<Character> characterSelect(sf::RenderWindow &window);
-int game(std::vector<Character> players);
+int game(std::vector<Character> players, sf::RenderWindow &window);
+void play(sf::RenderWindow &window, Character player);

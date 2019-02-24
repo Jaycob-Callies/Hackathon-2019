@@ -8,7 +8,23 @@ struct Position
 	int y;
 };
 
-int game(std::vector<Character> players) {
+int game(std::vector<Character> players, sf::RenderWindow &window) {
+	int peopleAlive = 16;
+	while (peopleAlive>1) {
+		for (int i = 0; i < players.size(); i++)
+		{
+			if (players.at(i).getStats().health>0)
+			play(window, players.at(i));
+		}
+		peopleAlive = 0;
+		for (int i = 0; i < players.size(); i++)
+		{
+			if (players.at(i).getStats().health > 0)
+			{
+				peopleAlive++;
+			}
+		}
+	}
 	return 0;
 }
 
@@ -704,4 +720,88 @@ int miniGameKeyPuzzle(sf::RenderWindow &window)
 	}
 
 	return correct_guess;
+}
+
+void play(sf::RenderWindow &window, Character player) {
+	sf::Event event;
+	Room* targetRoom;
+	while (true)
+	{
+		while (window.pollEvent(event))//poll
+		{
+			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed go direction
+			{
+				if ((sf::Mouse::getPosition().x > window.getSize().x - window.getSize().x / 10.0 && sf::Mouse::getPosition().x < window.getSize().x + window.getSize().x / 10.0)
+					&& (sf::Mouse::getPosition().y > window.getSize().y - window.getSize().y / 6.0 && sf::Mouse::getPosition().y < window.getSize().y + window.getSize().y / 6.0))
+				{
+					targetRoom = player.getLocation();
+				}
+				else if (sf::Mouse::getPosition().x < window.getSize().x - window.getSize().x / 10.0
+					&& (sf::Mouse::getPosition().y > window.getSize().y - window.getSize().y / 6.0 && sf::Mouse::getPosition().y < window.getSize().y + window.getSize().y / 6.0))
+				{
+					targetRoom = player.getLocation()->getpLeft();
+				}
+				else if (sf::Mouse::getPosition().x > window.getSize().x + window.getSize().x / 10.0
+					&& (sf::Mouse::getPosition().y > window.getSize().y - window.getSize().y / 6.0 && sf::Mouse::getPosition().y < window.getSize().y + window.getSize().y / 6.0))
+				{
+					targetRoom = player.getLocation()->getpRight();
+				}
+				else if ((sf::Mouse::getPosition().x > window.getSize().x - window.getSize().x / 10.0 && sf::Mouse::getPosition().x < window.getSize().x + window.getSize().x / 10.0)
+					&& sf::Mouse::getPosition().y < window.getSize().y - window.getSize().y / 6.0)
+				{
+					targetRoom = player.getLocation()->getpTop();
+				}
+				else
+				{
+					targetRoom = player.getLocation()->getpBottom();
+				}
+				if (targetRoom->getExplore() == false)
+				{
+					if (4 == miniGameKeyPuzzle(window));
+					player.setLocation(targetRoom);
+				}
+				else if (targetRoom != player.getLocation())
+				{
+					if (targetRoom->getRoomType() == 1)
+					{
+						miniGameRangedAttack("Arrow.png", window, 1);
+						targetRoom->kill();
+					}
+					else if (player.getLocation()->getRoomType() == 0)
+					{
+						if (4 == miniGameEvasion(player.getFile(), window, 1))
+						{
+							player.setLocation(targetRoom);
+						}
+					}
+				}
+				else
+					switch (targetRoom->getRoomType())//{Trap, Monster, Chest, Empty, Hostage, Healing};//6
+					{
+					case 0:
+						miniGameEvasion(player.getFile(), window, 1);
+						return;
+						break;
+					case 1:
+						miniGameDodgeAttack(window);
+						return;
+						break;
+					case 2:
+						if (4 == miniGameKeyPuzzle(window));
+						player.setPotion("Potion.png");
+						return;
+						break;
+					case 3:
+						return;
+						break;
+					case 4:
+						player.setFollower("DamselInDistress.png");
+						break;
+					default:
+						break;
+					}
+			}
+		}
+	}
+
 }
