@@ -44,6 +44,7 @@ int main()
 	sf::Image arrow;
 	arrow.loadFromFile("Arrow.png");
 
+
 	while (window.isOpen())
 	{
 
