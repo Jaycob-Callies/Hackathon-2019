@@ -333,6 +333,30 @@
     <Image Include="..\..\..\..\..\OneDrive\Desktop\DnD Art Game\Picture\Sword2.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="sideWizardTop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="side Wizard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Pony.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Beartop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bear.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Codwelltop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Codwell.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Horsetop.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

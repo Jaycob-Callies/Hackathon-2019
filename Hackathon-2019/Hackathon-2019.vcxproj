@@ -145,6 +145,8 @@
     <Image Include="BarbarianMonster.png" />
     <Image Include="BarbarianMonsterTop.png" />
     <Image Include="BBTop.png" />
+    <Image Include="Bear.png" />
+    <Image Include="Beartop.png" />
     <Image Include="BlueBard.png" />
     <Image Include="BlueMage.png" />
     <Image Include="BlueRogue.png" />
@@ -158,6 +160,8 @@
     <Image Include="ChestMiniGameStar.png" />
     <Image Include="ChestMiniGameTriangle.png" />
     <Image Include="ChestTop.png" />
+    <Image Include="Codwell.png" />
+    <Image Include="Codwelltop.png" />
     <Image Include="DamselInDistress.png" />
     <Image Include="DamselInDistress2.png" />
     <Image Include="Dirt.png" />
@@ -183,6 +187,7 @@
     <Image Include="GWTop.png" />
     <Image Include="HealthPotion.png" />
     <Image Include="Heart.png" />
+    <Image Include="Horsetop.png" />
     <Image Include="IceBall.png" />
     <Image Include="IceBolt.png" />
     <Image Include="KeyOutline.png" />
@@ -191,6 +196,7 @@
     <Image Include="LightningBolt.png" />
     <Image Include="OOF.png" />
     <Image Include="PitFullOfSpikes.png" />
+    <Image Include="Pony.png" />
     <Image Include="PossibleKey1.png" />
     <Image Include="PossibleKey1Varient1.png" />
     <Image Include="PossibleKey1Varient2.png" />
@@ -211,6 +217,8 @@
     <Image Include="RRTop.png" />
     <Image Include="RWTop.png" />
     <Image Include="Shield.png" />
+    <Image Include="side Wizard.png" />
+    <Image Include="sideWizardTop.png" />
     <Image Include="Skeleton.png" />
     <Image Include="SKTop.png" />
     <Image Include="SMTop.png" />
