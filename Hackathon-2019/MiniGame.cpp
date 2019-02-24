@@ -35,7 +35,7 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 	distance = obstacleLocations.at(0) + obstacleLocations.at(1) + obstacleLocations.at(2) + obstacleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32 / scaleF;
 
 	sf::Texture characterTexture;
-	characterTexture.loadFromFile("YellowWarrior.png");
+	characterTexture.loadFromFile(characterImage);
 	sf::Sprite characterSprite;
 	characterSprite.setTexture(characterTexture);
 	characterSprite.setScale(scaleF, scaleF);
@@ -59,7 +59,7 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 	obstacle1Sprite.setScale(scaleF, scaleF);
 
 	sf::Texture obstacle2Texture;
-	obstacle2Texture.loadFromFile("OOF.png");
+	obstacle2Texture.loadFromFile("LightningBolt.png");
 	sf::Sprite obstacle2Sprite;
 	obstacle2Sprite.setTexture(obstacle2Texture);
 	obstacle2Sprite.setScale(scaleF, scaleF);
@@ -71,7 +71,7 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 	obstacle3Sprite.setScale(scaleF, scaleF);
 
 	sf::Texture obstacle4Texture;
-	obstacle4Texture.loadFromFile("AssPoop.png");
+	obstacle4Texture.loadFromFile("Skeleton.png");
 	sf::Sprite obstacle4Sprite;
 	obstacle4Sprite.setTexture(obstacle4Texture);
 	obstacle4Sprite.setScale(scaleF, scaleF);
@@ -116,7 +116,7 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 			obstacles.at(i).move(obstacles.at(i - 1).getPosition().x, 0);
 		}
 	}
-
+	characterSprite.setPosition(0, window.getSize().y);
 	//main functionality
 	while (true)//infinite loop
 	{
@@ -130,19 +130,14 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 					onFloor = 0;
 					time = 0;
 					prevVel = -20; //bad solution for hang time issue, but possible.
-
-					/*if (onFloor == 0)
-					{
-
-					}*/
 				}
 			}
 		}
 
 		//exponentially decrease trajectory simulating gravity
 
-		characterSprite.move(0, (prevVel + pow(2, 1.1)) * 4);
-		prevVel = prevVel + pow(1.1, 2);
+		characterSprite.move(0, -1*(225 - pow(time-15, 2))/20);//(prevVel + pow(2, 1.1)) * 1.5);
+		prevVel = (prevVel + pow(1.1, 2) * 0.75);
 
 		//bound character to stay on screen.
 
@@ -170,13 +165,13 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 		//draw all sprites
 
 		window.clear();
-		backgroundSprite.move(-1 * scaleF, 0);
+		backgroundSprite.move(-3 * scaleF, 0);
 		window.draw(backgroundSprite);
 		window.draw(characterSprite);
 
 		for (int i = 0; i < obstacles.size(); i++)
 		{
-			obstacles.at(i).move(-1.0 * scaleF, 0.0);
+			obstacles.at(i).move(-3.0 * scaleF, 0.0);
 			window.draw(obstacles.at(i));
 		}
 
