@@ -167,6 +167,7 @@
     <Image Include="GRTop.png" />
     <Image Include="GWTop.png" />
     <Image Include="HealthPotion.png" />
+    <Image Include="Heart.png" />
     <Image Include="IceBall.png" />
     <Image Include="IceBolt.png" />
     <Image Include="Knapsack.png" />
@@ -193,6 +194,7 @@
     <Image Include="RMTop.png" />
     <Image Include="RRTop.png" />
     <Image Include="RWTop.png" />
+    <Image Include="Shield.png" />
     <Image Include="Skeleton.png" />
     <Image Include="SKTop.png" />
     <Image Include="SMTop.png" />

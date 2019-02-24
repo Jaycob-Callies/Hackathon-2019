@@ -312,6 +312,34 @@ int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
 	window.draw(key3Sprite);
 
 	
+	// wanting a memory matching game
+	
+	//put the images into an array, randomize the array
 
+	//have another image on top, that when selected it disapears until another is selected, and if they match both images disapear
+	//if not the same image, then the top image reappears ontop, and they have to select again
+	//continues until all the same images are matched
+
+	//exits
 	return correct_guess;
+}
+int miniGameDoorPuzzle(sf::RenderWindow &window /*unsure what else it might need*/)
+{
+	//opens a picture, displays it
+
+	// then the puzzle, the moving type, the picture is cut into 8 parts, having 9 sections
+
+	// 3 4 6
+	// 8 2 1
+	// 7 5
+
+	// v v v
+
+	// 1 2 3
+	// 4 5 6
+	// 7 8 
+
+	//can move the pieces to open slot. When the image matches the image shown then it is done
+
+	//would need to display both the original image and the cut up version
 }

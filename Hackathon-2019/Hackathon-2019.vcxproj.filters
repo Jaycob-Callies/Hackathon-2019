@@ -273,6 +273,13 @@
     <Image Include="OOF.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Shield.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Sword.png" />
+    <Image Include="Heart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
