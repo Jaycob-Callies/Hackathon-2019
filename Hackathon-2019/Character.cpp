@@ -6,6 +6,7 @@ std::vector<Character> characterSelect(sf::RenderWindow &window)
 	std::vector<Character> temp;
 	int vMid = 0, hMid = 0; //Variable Declaration.
 	double scaleF = window.getSize().y / 32.0 / 8;
+	std::string newCharacterFile;
 	sf::Event event;
 	sf::Mouse mouse;
 
@@ -107,23 +108,51 @@ std::vector<Character> characterSelect(sf::RenderWindow &window)
 
 	while (true)
 	{
-		while (window.pollEvent(event))//poll
+		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
+			if (event.type == sf::Event::MouseButtonPressed)
 			{
-				if (sf::Mouse::getPosition().y > hMid + 1 * 32 * scaleF)//vertical correct
+				for (int i = 0; i < 4; i++)
 				{
-					if (sf::Mouse::getPosition().x < hMid - window.getSize().x / 6)
+					for (int j = 0; j < 4; j++)
 					{
-						//run main game.
-					}
-					else if (sf::Mouse::getPosition().x < hMid + window.getSize().x / 6)
-					{
-						beachBall(window); //runs mini games.
-					}
-					else
-					{
-						exit(EXIT_SUCCESS); //closes game.
+						if((sf::Mouse::getPosition().x< window.getSize().x / 4.0 * (j+1) && sf::Mouse::getPosition().x > window.getSize().x / 4.0 * (j))
+							&& (sf::Mouse::getPosition().y< window.getSize().y / 4.0 * (i + 1) && sf::Mouse::getPosition().y > window.getSize().y / 4.0 * (i)))
+						{
+							switch (i)
+							{
+							case 1:
+								newCharacterFile = "Red";
+								break;
+							case 2:
+								newCharacterFile = "Blue";
+								break;
+							case 3:
+								newCharacterFile = "Green";
+								break;
+							default:
+								newCharacterFile = "Yellow";
+								break;
+							}
+							
+							switch (j)
+							{
+							case 1:
+								newCharacterFile = newCharacterFile + "Rogue.png";
+								break;
+							case 2:
+								newCharacterFile = newCharacterFile + "Mage.png";
+								break;
+							case 3:
+								newCharacterFile = newCharacterFile + "Bard.png";
+								break;
+							default:
+								newCharacterFile = newCharacterFile + "Warrior.png";
+								break;
+							}
+							temp.push_back(*new(Character));
+							temp.at(temp.size() - 1).setFile(newCharacterFile);
+						}
 					}
 				}
 			}
