@@ -13,7 +13,7 @@ struct Position
 //Alter jumping ability to only jump when feet touching ground or platform instead of multiple double jumps. (Done) 
 //Alter hitbox to fit average character build. (Hitbox is about accurate, Done)
 //Alter obstacle y-direction. (Done)
-//Alter hang time in the air. 
+//Alter hang time in the air. (Done)
 //Make program functional. (Done)
 
 int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double evasionDifficulty)

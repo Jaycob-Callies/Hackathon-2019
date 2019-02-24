@@ -43,21 +43,21 @@
 	shape.move((float)hMid - 100, (float)vMid - 100);
 	shape.setFillColor(sf::Color::Green);
 
-	//load images
-	sf::Image arrow;
-	arrow.loadFromFile("Arrow.png");
+	////load images
+	//sf::Image arrow;
+	//arrow.loadFromFile("Arrow.png");
 
-	Image wizardMonster;
-	wizardMonster.loadFromFile("WizardMonster.png");
+	//Image wizardMonster;
+	//wizardMonster.loadFromFile("WizardMonster.png");
 
-	Image SwampMonster;
-	SwampMonster.loadFromFile("SwampMonser.png");
+	//Image SwampMonster;
+	//SwampMonster.loadFromFile("SwampMonser.png");
 
-	Image Skeleton;
-	Skeleton.loadFromFile("Skeleton.png");
+	//Image Skeleton;
+	//Skeleton.loadFromFile("Skeleton.png");
 
-	Image RedBard;
-	RedBard.loadFromFile("RedBard.png");
+	//Image RedBard;
+	//RedBard.loadFromFile("RedBard.png");
 
 
 	while (window.isOpen())
