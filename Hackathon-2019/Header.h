@@ -14,6 +14,7 @@
 #include <dos.h>
 #include <stdlib.h>
 #include <conio.h>
+using namespace sf;
 
 int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty);
 int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty);
