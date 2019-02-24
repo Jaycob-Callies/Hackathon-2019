@@ -334,4 +334,5 @@ int miniGameDoorPuzzle(sf::RenderWindow &window /*unsure what else it might need
 
 	//can move the pieces to open slot. When the image matches the image shown then it is done
 
+	//would need to display both the original image and the cut up version
 }
