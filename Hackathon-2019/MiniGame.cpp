@@ -1,5 +1,7 @@
 #include "Header.h"
 
+
+
 struct Position
 {
 	int x;
@@ -368,7 +370,7 @@ int miniGameDodgeAttack(sf::RenderWindow &window) {
 	attacker1.loadFromFile("WizardMonster.png");
 	sf::Sprite attackerSprite;
 	attackerSprite.setTexture(attacker1);
-	attackerSprite.setScale(scaleF * 5, scaleF * 5);
+	attackerSprite.setScale(scaleF * 2.5, scaleF * 2.5);
 	attackerSprite.setPosition(Vector2f(rand()%window.getSize().x, rand() % window.getSize().y));
 
 	sf::Texture attacker2;
