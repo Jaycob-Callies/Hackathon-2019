@@ -1,34 +1,153 @@
 #include "Header.h"
+using namespace sf;
+#define WIDTH 1500
+#define HEIGHT 300
 
-int difficulty = 0;
-int windowWidth = 400;
-int windowHeight = 300;
+//int difficulty = 0;
 
-int MiniGameEvasion(sf::Image character, int difficulty, sf::RenderWindow &window)
+struct Position
 {
-	//speed = scrolling speed, IsKeyDown(sf::key::____)- Can use to program jumping. (should be the only necessary action).
-	double speed = 0.0;
-	int velocity = 0, gravity = 0, jumping = 0, amountOfCorrectResponses = 0;
-	sf::Event event;
+	int x;
+	int y;
+};
 
-	while (window.pollEvent(event))
+int MiniGameEvasion(sf::RenderWindow &window)
+{
+	//sf::Image character, int difficulty, sf::RenderWindow &window
+	window.setFramerateLimit(60);
+
+/*	Texture t1;
+	Texture t2;
+	t1.loadFromFile("images/character1.png");*/ //probably dont need both of these images for the character.
+	//t2.loadFromFile("images/character2.png");
+
+	/*Sprite character[2];
+	character[0] = Sprite(t1);
+	character[1] = Sprite(t2);*/
+
+	CircleShape character(100.f, 8000);
+	character.setFillColor(sf::Color::Magenta);
+	Vector2<int> rip = { 0, 0 };
+
+	static const int CHARACTER_Y_BOTTOM = HEIGHT + 400; //replace 0 with t1.getSize().y.
+	Position characterPos;
+	characterPos.x = 50;
+	characterPos.y = CHARACTER_Y_BOTTOM;
+
+	int index = 0;
+	float frame = 0.f, frameSpeed = 0.4f;
+	const int changeCount = 5;
+
+	const int gravity = 5;
+	bool isJumping = true;
+	bool isBottom = false;
+
+/*	Texture t3;
+	t3.loadFromFile("images/obstacle.png");*/ //add more obstacles and randomize obstacles user encounters.
+	/*Sprite obstacle(t3);*/
+
+	CircleShape obstacle(100.f, 3);
+	obstacle.setFillColor(sf::Color::Cyan);
+
+	static const int OBSTACLE_Y_BOTTOM = HEIGHT + 450; //replace 0 with - t3.getSize().y.
+	Position obstaclePos;
+	obstaclePos.x = WIDTH - 20;
+	obstaclePos.y = OBSTACLE_Y_BOTTOM;
+
+	const int obstacleSpeed = 4; //Control the speed at which obstacles scroll at you (impliment this into dificulty later?)
+
+	while (window.isOpen()) //while the window is open this will run.
 	{
-		if (event.type == sf::Event::KeyPressed)
+		Event event;
+
+		while (window.pollEvent(event)) //While there are pending events this will run.
 		{
-			if (sf::Keyboard::Space)
+			if (event.type == Event::Closed) //close out game.
 			{
-				velocity = 0;
-				gravity = 0;
-				jumping == true;
+				window.close();
 			}
+
+			if (event.type == sf::Event::MouseButtonPressed) //if a mouse button is pressed, continue...
+			{
+				if (isBottom && isJumping) //if feet on ground and press mouse button to jump...
+				{
+					isJumping = true; //jump will happen...
+					isBottom = false; //no longer have feet on ground...
+				}
+			}
+
+
+			//need to add collision detection between character and objects.
 		}
-		//sf::CircleShape Triangle(100);
-		//sf::Triangle.setPointCount(3);
-		//
-		//if (character intersects(const; Rect<T> &triangle))
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			characterPos.y = -10;
+
+			if (characterPos.y > 500) //if jumping is true... (isJumping)
+			{
+				characterPos.y -= gravity; //character position in y-direction = character pos in y-direction minus gravity.
+			}
+			else if (characterPos.y < 500)//otherwise...
+			{
+				characterPos.y = 500; //character position in y-direction = character pos in y-direction plus gravity.
+			}
+
+			//if (characterPos.y >= CHARACTER_Y_BOTTOM) //if character pos in y-dir is GREATER than OR EQUAL TO the bottom of lvl...
+			//{
+			//	characterPos.y = CHARACTER_Y_BOTTOM; //then char pos in y-dir equal to bottom of lvl...
+			//	isBottom = true; //and feet on ground is true.
+			//}
+			//if (characterPos.y <= CHARACTER_Y_BOTTOM) //if char pos in y-dir is less than or equal to bottom of lvl...
+			//{
+			//	isJumping = false; //then you are not jumping.
+			//}
+		}
+		//if (characterPos.y > 500) //if jumping is true... (isJumping)
 		//{
-		//	characterLife -= 1;
+		//	characterPos.y -= gravity; //character position in y-direction = character pos in y-direction minus gravity.
 		//}
+		//else if (characterPos.y < 500)//otherwise...
+		//{
+		//	characterPos.y = 500; //character position in y-direction = character pos in y-direction plus gravity.
+		//}
+
+		//if (characterPos.y >= CHARACTER_Y_BOTTOM) //if character pos in y-dir is GREATER than OR EQUAL TO the bottom of lvl...
+		//{
+		//	characterPos.y = CHARACTER_Y_BOTTOM; //then char pos in y-dir equal to bottom of lvl...
+		//	isBottom = true; //and feet on ground is true.
+		//}
+		//if (characterPos.y <= CHARACTER_Y_BOTTOM) //if char pos in y-dir is less than or equal to bottom of lvl...
+		//{
+		//	isJumping = false; //then you are not jumping.
+		//}
+
+		frame += frameSpeed;
+		if (frame > changeCount)
+		{
+			frame -= changeCount;
+			++index;
+			if (index >= 2) { index = 0; }
+		}
+
+		if (obstaclePos.x <= 0)
+		{
+			obstaclePos.x = WIDTH;
+		}
+		else
+		{
+			obstaclePos.x -= obstacleSpeed;
+		}
+
+		obstacle.setPosition(obstaclePos.x, obstaclePos.y);
+
+		character.setPosition(characterPos.x, characterPos.y); //replace character[index]
+
+		window.clear(Color::Black); //Maybe change this black background to something more colorful.
+		window.draw(character); //replace character[index]
+		window.draw(obstacle);
+
+		window.display();
+
 	}
 
 	return amountOfCorrectResponses;
@@ -73,36 +192,44 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 	wallSprite.setScale(scaleF, scaleF);
 	wallSprite.setPosition(-hMid, -vMid);
 
+	//hitbox
 	sf::RectangleShape hitBox(sf::Vector2f(25*scaleF, 2*scaleF));
 
+	//set locations of obsticles based on reandom values
 	for (int i = 0; i < 4; i++)
 	{
 		obsticles.push_back(sf::Sprite(wallSprite));
 		obsticles.at(2*i).setPosition(obsticleLocations.at(i)*32 * scaleF, obsticleHeights.at(i) + 48*scaleF);
 		obsticles.push_back(sf::Sprite(wallSprite));
 		obsticles.at(2*i+1).setPosition(obsticleLocations.at(i) * 32 * scaleF, obsticleHeights.at(i) - window.getSize().y);
-		if (i > 0)
+		if (i > 0)//offset the concurrent onsticles so they dont stack
 		{
 			obsticles.at(2*i).move(obsticles.at(2*i - 2).getPosition().x, 0);
 			obsticles.at(2*i+1).move(obsticles.at(2*i - 1).getPosition().x, 0);
 		}
 	}
 
-	while (wallSprite.getPosition().x > -1 * distance * 32)
+	//main functionality
+	while (true)//infinite loop
 	{
-		while (window.pollEvent(event))
+		//event handling
+		while (window.pollEvent(event))//poll
 		{
-			if (event.type == sf::Event::MouseButtonPressed)
+			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
 			{
 				time = 0;
 				prevVel = -20;
 			}
 		}
+		
+		//exponentially decrease trajectory simulating gravity
 		projectileSprite.move(0, prevVel + pow(2, 1.1));
 		prevVel = prevVel + pow(1.1, 2);
-
+		
+		//set hitbox on stem of arrow
 		hitBox.setPosition(projectileSprite.getPosition().x + 5 * scaleF, projectileSprite.getPosition().y + 15 * scaleF);
 
+		//check if hitbox intersects an obsticle
 		for (int i = 0; i < obsticles.size(); i++)
 		{
 			if (hitBox.getGlobalBounds().intersects(obsticles.at(i).getGlobalBounds()) && obsticles.at(i).getColor() != sf::Color::Blue)
@@ -111,6 +238,8 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 				obsticles.at(i).setColor(sf::Color::Blue);
 			}
 		}
+
+		//draw all sprites
 		window.clear();
 		backgroundSprite.move(-1 * scaleF, 0);
 		window.draw(backgroundSprite);
@@ -120,10 +249,14 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 			obsticles.at(i).move(-1.0 * scaleF, 0.0);
 			window.draw(obsticles.at(i));
 		}
+
+		//if the last sprite moves off screen exit
 		if (obsticles.at(7).getPosition().x < 0)
 		{
 			return doorsDodged;
 		}
+
+		//if not display next frame
 		window.display();
 		time++;
 	}
@@ -134,25 +267,34 @@ int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
 	int correct_guess = 0;
 	sf::Texture key1Texture;
 	key1Texture.loadFromFile("PossibleKey1.png");
+
 	sf::Sprite key1Sprite;
 	key1Sprite.setTexture(key1Texture);
 
+	window.draw(key1Sprite);
+	window.draw(key1Sprite);
 
 	sf::Texture key2Texture;
 	key2Texture.loadFromFile("PossibleKey2.png");
+
 	sf::Sprite key2Sprite;
 	key2Sprite.setTexture(key2Texture);
 
+	window.draw(key2Sprite);
+	window.draw(key2Sprite);
 
 	sf::Texture key3Texture;
 	key3Texture.loadFromFile("PossibleKey3.png");
+
 	sf::Sprite key3Sprite;
 	key3Sprite.setTexture(key1Texture);
 
-
-
+	window.draw(key3Sprite);
+	window.draw(key3Sprite);
 
 	
 
 	return correct_guess;
+}
+	return 0;
 }
