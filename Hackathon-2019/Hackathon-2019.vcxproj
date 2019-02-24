@@ -146,12 +146,15 @@
     <Image Include="BWTop.png" />
     <Image Include="Chest.png" />
     <Image Include="ChestTop.png" />
+    <Image Include="DamselInDistress.png" />
+    <Image Include="DamselInDistress2.png" />
     <Image Include="Dirt.png" />
     <Image Include="Door1.png" />
     <Image Include="Door2.png" />
     <Image Include="Door3.png" />
     <Image Include="EATop.png" />
     <Image Include="EnemyArcher.png" />
+    <Image Include="FamishedMan.png" />
     <Image Include="FireBall.png" />
     <Image Include="FireBolt.png" />
     <Image Include="FogCorners.png" />
@@ -204,6 +207,7 @@
     <Image Include="SwampMonster.png" />
     <Image Include="Sword.png" />
     <Image Include="Table.png" />
+    <Image Include="TitleScreen.png" />
     <Image Include="TripWire.png" />
     <Image Include="Wizard.png" />
     <Image Include="WizardMonster.png" />

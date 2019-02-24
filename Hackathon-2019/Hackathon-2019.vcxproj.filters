@@ -282,6 +282,18 @@
     <Image Include="Sword.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="FamishedMan.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="DamselInDistress2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="DamselInDistress.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="TitleScreen.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
