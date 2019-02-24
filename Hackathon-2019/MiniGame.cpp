@@ -1,9 +1,4 @@
 #include "Header.h"
-using namespace sf;
-#define WIDTH 1500
-#define HEIGHT 300
-
-//int difficulty = 0;
 
 struct Position
 {
@@ -11,146 +6,174 @@ struct Position
 	int y;
 };
 
-int MiniGameEvasion(sf::RenderWindow &window)
+//Raise floor a touch higher. (Done)
+//Alter "obsticles" to be random non-moving sprites. (Done)
+//Alter jumping ability to only jump when feet touching ground or platform instead of multiple double jumps. (Done) 
+//Alter hitbox to fit average character build. 
+//Make program functional.
+
+int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double evasionDifficulty)
 {
-	//sf::Image character, int difficulty, sf::RenderWindow &window
 	window.setFramerateLimit(60);
 
-/*	Texture t1;
-	Texture t2;
-	t1.loadFromFile("images/character1.png");*/ //probably dont need both of these images for the character.
-	//t2.loadFromFile("images/character2.png");
+	int obstaclesDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
+	int time = 0, prevVel = 0, onFloor = 0;
+	double speed = evasionDifficulty * .1, scaleF = window.getSize().y / 32.0 / 8;
+	sf::Event event;
+	std::vector<int> obstacleLocations;
+	std::vector<sf::Sprite> obstacles;
 
-	/*Sprite character[2];
-	character[0] = Sprite(t1);
-	character[1] = Sprite(t2);*/
-
-	CircleShape character(100.f, 8000);
-	character.setFillColor(sf::Color::Magenta);
-	Vector2<int> rip = { 0, 0 };
-
-	static const int CHARACTER_Y_BOTTOM = HEIGHT + 400; //replace 0 with t1.getSize().y.
-	Position characterPos;
-	characterPos.x = 50;
-	characterPos.y = CHARACTER_Y_BOTTOM;
-
-	int index = 0, amountOfCorrectResponses = 0;
-	float frame = 0.f, frameSpeed = 0.4f;
-	const int changeCount = 5;
-
-	const int gravity = 5;
-	bool isJumping = true;
-	bool isBottom = false;
-
-/*	Texture t3;
-	t3.loadFromFile("images/obstacle.png");*/ //add more obstacles and randomize obstacles user encounters.
-	/*Sprite obstacle(t3);*/
-
-	CircleShape obstacle(100.f, 3);
-	obstacle.setFillColor(sf::Color::Cyan);
-
-	static const int OBSTACLE_Y_BOTTOM = HEIGHT + 450; //replace 0 with - t3.getSize().y.
-	Position obstaclePos;
-	obstaclePos.x = WIDTH - 20;
-	obstaclePos.y = OBSTACLE_Y_BOTTOM;
-
-	const int obstacleSpeed = 4; //Control the speed at which obstacles scroll at you (impliment this into dificulty later?)
-
-	while (window.isOpen()) //while the window is open this will run.
+	for (int i = 0; i < 4; i++)
 	{
-		Event event;
-
-		while (window.pollEvent(event)) //While there are pending events this will run.
-		{
-			if (event.type == Event::Closed) //close out game.
-			{
-				window.close();
-			}
-
-			if (event.type == sf::Event::MouseButtonPressed) //if a mouse button is pressed, continue...
-			{
-				if (isBottom && isJumping) //if feet on ground and press mouse button to jump...
-				{
-					isJumping = true; //jump will happen...
-					isBottom = false; //no longer have feet on ground...
-				}
-			}
-
-
-			//need to add collision detection between character and objects.
-		}
-		if (event.type == sf::Event::MouseButtonPressed)
-		{
-			characterPos.y = -10;
-
-			if (characterPos.y > 500) //if jumping is true... (isJumping)
-			{
-				characterPos.y -= gravity; //character position in y-direction = character pos in y-direction minus gravity.
-			}
-			else if (characterPos.y < 500)//otherwise...
-			{
-				characterPos.y = 500; //character position in y-direction = character pos in y-direction plus gravity.
-			}
-
-			//if (characterPos.y >= CHARACTER_Y_BOTTOM) //if character pos in y-dir is GREATER than OR EQUAL TO the bottom of lvl...
-			//{
-			//	characterPos.y = CHARACTER_Y_BOTTOM; //then char pos in y-dir equal to bottom of lvl...
-			//	isBottom = true; //and feet on ground is true.
-			//}
-			//if (characterPos.y <= CHARACTER_Y_BOTTOM) //if char pos in y-dir is less than or equal to bottom of lvl...
-			//{
-			//	isJumping = false; //then you are not jumping.
-			//}
-		}
-		//if (characterPos.y > 500) //if jumping is true... (isJumping)
-		//{
-		//	characterPos.y -= gravity; //character position in y-direction = character pos in y-direction minus gravity.
-		//}
-		//else if (characterPos.y < 500)//otherwise...
-		//{
-		//	characterPos.y = 500; //character position in y-direction = character pos in y-direction plus gravity.
-		//}
-
-		//if (characterPos.y >= CHARACTER_Y_BOTTOM) //if character pos in y-dir is GREATER than OR EQUAL TO the bottom of lvl...
-		//{
-		//	characterPos.y = CHARACTER_Y_BOTTOM; //then char pos in y-dir equal to bottom of lvl...
-		//	isBottom = true; //and feet on ground is true.
-		//}
-		//if (characterPos.y <= CHARACTER_Y_BOTTOM) //if char pos in y-dir is less than or equal to bottom of lvl...
-		//{
-		//	isJumping = false; //then you are not jumping.
-		//}
-
-		frame += frameSpeed;
-		if (frame > changeCount)
-		{
-			frame -= changeCount;
-			++index;
-			if (index >= 2) { index = 0; }
-		}
-
-		if (obstaclePos.x <= 0)
-		{
-			obstaclePos.x = WIDTH;
-		}
-		else
-		{
-			obstaclePos.x -= obstacleSpeed;
-		}
-
-		obstacle.setPosition(obstaclePos.x, obstaclePos.y);
-
-		character.setPosition(characterPos.x, characterPos.y); //replace character[index]
-
-		window.clear(Color::Black); //Maybe change this black background to something more colorful.
-		window.draw(character); //replace character[index]
-		window.draw(obstacle);
-
-		window.display();
-
+		obstacleLocations.push_back(6 + (rand() % 8));
 	}
 
-	return amountOfCorrectResponses;
+	distance = obstacleLocations.at(0) + obstacleLocations.at(1) + obstacleLocations.at(2) + obstacleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32 / scaleF;
+
+	sf::Texture characterTexture;
+	characterTexture.loadFromFile("YellowWarrior.png");
+	sf::Sprite characterSprite;
+	characterSprite.setTexture(characterTexture);
+	characterSprite.setScale(scaleF, scaleF);
+
+	sf::Texture backgroundTexture;
+	backgroundTexture.loadFromFile("StoneWallCorners.png", sf::IntRect(32, 0, 32, 32));
+	backgroundTexture.setRepeated(true);
+	sf::Sprite backgroundSprite(backgroundTexture, sf::IntRect(0, 0, distance * 32, 8 * 32));
+	backgroundSprite.setScale(scaleF, scaleF);
+
+	sf::Texture obstacleTexture;
+	obstacleTexture.loadFromFile("PitFullOfSpikes.png");
+	sf::Sprite obstacleSprite;
+	obstacleSprite.setTexture(obstacleTexture);
+	obstacleSprite.setScale(scaleF, scaleF);
+
+	sf::Texture obstacle1Texture;
+	obstacle1Texture.loadFromFile("TripWire.png");
+	sf::Sprite obstacle1Sprite;
+	obstacle1Sprite.setTexture(obstacle1Texture);
+	obstacle1Sprite.setScale(scaleF, scaleF);
+
+	sf::Texture obstacle2Texture;
+	obstacle2Texture.loadFromFile("OOF.png");
+	sf::Sprite obstacle2Sprite;
+	obstacle2Sprite.setTexture(obstacle2Texture);
+	obstacle2Sprite.setScale(scaleF, scaleF);
+
+	sf::Texture obstacle3Texture;
+	obstacle3Texture.loadFromFile("IceBolt.png");
+	sf::Sprite obstacle3Sprite;
+	obstacle3Sprite.setTexture(obstacle3Texture);
+	obstacle3Sprite.setScale(scaleF, scaleF);
+
+	sf::Texture obstacle4Texture;
+	obstacle4Texture.loadFromFile("AssPoop.png");
+	sf::Sprite obstacle4Sprite;
+	obstacle4Sprite.setTexture(obstacle4Texture);
+	obstacle4Sprite.setScale(scaleF, scaleF);
+
+	//sf::Texture wallTexture;
+	//wallTexture.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 32, 32, 32));
+	//wallTexture.setRepeated(true);
+	//sf::Sprite wallSprite(wallTexture, sf::IntRect(0, 0, 32, 8 * 32));
+	//wallSprite.setScale(scaleF, scaleF);
+	//wallSprite.setPosition(-hMid, -vMid);
+	
+	sf::RectangleShape hitBox(sf::Vector2f(25 * scaleF, 2 * scaleF));
+
+	//set locations of obsticles based on reandom values
+	for (int i = 0; i < 4; i++)
+	{
+		switch (rand() % 5)//obstacles i want)
+		{
+		case 1:
+			obstacles.push_back(sf::Sprite(obstacleSprite));//Sprite of first random
+			break;
+		case 2:
+			obstacles.push_back(sf::Sprite(obstacle1Sprite));//Sprite of first random
+			break;
+		case 3:
+			obstacles.push_back(sf::Sprite(obstacle2Sprite));//Sprite of first random
+			break;
+		case 4:
+			obstacles.push_back(sf::Sprite(obstacle3Sprite));//Sprite of first random
+			break;
+		default:
+			obstacles.push_back(sf::Sprite(obstacle4Sprite));//Sprite of first random
+			break;
+		}
+		obstacles.at(i).setPosition(obstacleLocations.at(i) * 32.0 * scaleF,window.getSize().y-scaleF * 8);
+		if (i > 0)//offset the concurrent onsticles so they dont stack
+		{
+			obstacles.at(i).move(obstacles.at(i - 1).getPosition().x, 0);
+		}
+	}
+
+	//main functionality
+	while (true)//infinite loop
+	{
+		//event handling
+		while (window.pollEvent(event))//poll
+		{
+			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
+			{
+				if (onFloor == 1)
+				{
+					onFloor = 0;
+					time = 0;
+					prevVel = -20;
+				}
+			}
+		}
+
+		//exponentially decrease trajectory simulating gravity
+		characterSprite.move(0, (prevVel + pow(2, 1.1)) * 4);
+		prevVel = prevVel + pow(1.1, 2);
+
+		//bound arrow to stay on screen
+
+		if (characterSprite.getPosition().y > window.getSize().y + -30 * scaleF)
+		{
+			characterSprite.setPosition(0, window.getSize().y - 30 * scaleF);
+			onFloor = 1;
+		}
+
+		//set hitbox on stem of arrow
+		hitBox.setPosition(characterSprite.getPosition().x + 5 * scaleF, characterSprite.getPosition().y + 15 * scaleF);
+
+		//check if hitbox intersects an obsticle
+		for (int i = 0; i < obstacles.size(); i++)
+		{
+			if (hitBox.getGlobalBounds().intersects(obstacles.at(i).getGlobalBounds()) && obstacles.at(i).getColor() != sf::Color::Blue)
+			{
+				obstaclesDodged--;
+				obstacles.at(i).setColor(sf::Color::Blue);
+			}
+		}
+
+		//draw all sprites
+		window.clear();
+		backgroundSprite.move(-1 * scaleF, 0);
+		window.draw(backgroundSprite);
+		window.draw(characterSprite);
+
+		for (int i = 0; i < obstacles.size(); i++)
+		{
+			obstacles.at(i).move(-1.0 * scaleF, 0.0);
+			window.draw(obstacles.at(i));
+		}
+
+		//if the last sprite moves off screen exit
+		if (obstacles.at(obstacles.size()-1).getPosition().x < 0)
+		{
+			return obstaclesDodged;
+		}
+
+		//if not display next frame
+		window.display();
+		time++;
+	}
+	return obstaclesDodged;
 }
 
 int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty)
