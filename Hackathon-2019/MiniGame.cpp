@@ -5,6 +5,8 @@ using namespace sf;
 
 //int difficulty = 0;
 
+
+
 struct Position
 {
 	int x;
