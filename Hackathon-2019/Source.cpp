@@ -5,6 +5,8 @@
 {
 	//initialize values
 	int hMid = 0, vMid = 0, flag = 0;
+	double evasionDifficulty = 0.0;
+	string characterImage = "";
 	sf::Event event;
 	sf::Vector2f quadrant;
 
@@ -77,7 +79,24 @@
 				else if (sf::Mouse::getPosition().x < hMid && sf::Mouse::getPosition().y >= vMid)//bottom left
 				{
 					shape.setFillColor(sf::Color::Blue);
-					MiniGameEvasion(window);
+					switch (rand() % 5)
+					{
+					case 1:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					case 2:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					case 3:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					case 4:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					default:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					}
 				}
 				else //bottom right
 				{
