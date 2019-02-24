@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
+    <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MiniGame.cpp" />
     <ClCompile Include="Source.cpp" />
