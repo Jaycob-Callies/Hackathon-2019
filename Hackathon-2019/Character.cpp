@@ -1,143 +1,132 @@
 #include "Header.h"
 
-int chooseCharacter(sf::RenderWindow &window)
+
+std::vector<Character> characterSelect(sf::RenderWindow &window)
 {
-	//loop for characters
-
-	int vMid = window.getSize().y / 2, hMid = window.getSize().x / 2, guess = 0;
-	double scaleF = window.getSize().y / 32 / 8;
+	std::vector<Character> temp;
+	int vMid = 0, hMid = 0; //Variable Declaration.
+	double scaleF = window.getSize().y / 32.0 / 8;
 	sf::Event event;
+	sf::Mouse mouse;
 
-	sf::Texture background;
-	background.loadFromFile("Dirt.png");
-	sf::Sprite backgroundSprite(background);
+	sf::Texture characterTexture1;
+	characterTexture1.loadFromFile("BlueBard.png");
+	sf::Sprite characterSprite1;
+	characterSprite1.setTexture(characterTexture1);
+	characterSprite1.setScale(scaleF, scaleF);
 
-	sf::Texture bwarrior;
-	bwarrior.loadFromFile("BlueWarrior.png");
-	sf::Sprite bwarriorSprite(bwarrior);
+	sf::Texture characterTexture2;
+	characterTexture2.loadFromFile("BlueMage.png");
+	sf::Sprite characterSprite2;
+	characterSprite2.setTexture(characterTexture2);
+	characterSprite2.setScale(scaleF, scaleF);
 
-	sf::Texture brogue;
-	brogue.loadFromFile("BlueRogue.png");
-	sf::Sprite brogueSprite(brogue);
+	sf::Texture characterTexture3;
+	characterTexture3.loadFromFile("BlueRogue.png");
+	sf::Sprite characterSprite3;
+	characterSprite3.setTexture(characterTexture3);
+	characterSprite3.setScale(scaleF, scaleF);
 
-	sf::Texture bmage;
-	bmage.loadFromFile("BlueMage.png");
-	sf::Sprite bmageSprite(bmage);
+	sf::Texture characterTexture4;
+	characterTexture4.loadFromFile("BlueWarrior.png");
+	sf::Sprite characterSprite4;
+	characterSprite4.setTexture(characterTexture4);
+	characterSprite4.setScale(scaleF, scaleF);
 
-	sf::Texture bbard;
-	bbard.loadFromFile("BlueBard.png");
-	sf::Sprite bbardSprite(bbard);
+	sf::Texture characterTexture5;
+	characterTexture5.loadFromFile("GreenBard.png");
+	sf::Sprite characterSprite5;
+	characterSprite5.setTexture(characterTexture5);
+	characterSprite5.setScale(scaleF, scaleF);
 
+	sf::Texture characterTexture6;
+	characterTexture6.loadFromFile("GreenMage.png");
+	sf::Sprite characterSprite6;
+	characterSprite6.setTexture(characterTexture6);
+	characterSprite6.setScale(scaleF, scaleF);
 
-	sf::Texture rwarrior;
-	rwarrior.loadFromFile("RedWarrior.png");
-	sf::Sprite rwarriorSprite(rwarrior);
+	sf::Texture characterTexture7;
+	characterTexture7.loadFromFile("GreenRogue.png");
+	sf::Sprite characterSprite7;
+	characterSprite7.setTexture(characterTexture7);
+	characterSprite7.setScale(scaleF, scaleF);
 
-	sf::Texture rrogue;
-	rrogue.loadFromFile("RedRogue.png");
-	sf::Sprite rrogueSprite(rrogue);
+	sf::Texture characterTexture8;
+	characterTexture8.loadFromFile("GreenWarrior.png");
+	sf::Sprite characterSprite8;
+	characterSprite8.setTexture(characterTexture8);
+	characterSprite8.setScale(scaleF, scaleF);
 
-	sf::Texture rmage;
-	rmage.loadFromFile("RedMage.png");
-	sf::Sprite rmageSprite(rmage);
+	sf::Texture characterTexture9;
+	characterTexture9.loadFromFile("RedBard.png");
+	sf::Sprite characterSprite9;
+	characterSprite9.setTexture(characterTexture9);
+	characterSprite9.setScale(scaleF, scaleF);
 
-	sf::Texture rbard;
-	rbard.loadFromFile("RedBard.png");
-	sf::Sprite rbardSprite(rbard);
+	sf::Texture characterTexture10;
+	characterTexture10.loadFromFile("RedMage.png");
+	sf::Sprite characterSprite10;
+	characterSprite10.setTexture(characterTexture10);
+	characterSprite10.setScale(scaleF, scaleF);
 
-	sf::Texture gwarrior;
-	gwarrior.loadFromFile("GreenWarrior.png");
-	sf::Sprite gwarriorSprite(gwarrior);
+	sf::Texture characterTexture11;
+	characterTexture11.loadFromFile("RedRogue.png");
+	sf::Sprite characterSprite11;
+	characterSprite11.setTexture(characterTexture11);
+	characterSprite11.setScale(scaleF, scaleF);
 
-	sf::Texture grogue;
-	grogue.loadFromFile("GreenRogue.png");
-	sf::Sprite grogueSprite(grogue);
+	sf::Texture characterTexture12;
+	characterTexture12.loadFromFile("RedWarrior.png");
+	sf::Sprite characterSprite12;
+	characterSprite12.setTexture(characterTexture12);
+	characterSprite12.setScale(scaleF, scaleF);
 
-	sf::Texture gmage;
-	gmage.loadFromFile("GreenMage.png");
-	sf::Sprite gmageSprite(gmage);
+	sf::Texture characterTexture13;
+	characterTexture13.loadFromFile("YellowBard.png");
+	sf::Sprite characterSprite13;
+	characterSprite13.setTexture(characterTexture13);
+	characterSprite13.setScale(scaleF, scaleF);
 
-	sf::Texture gbard;
-	gbard.loadFromFile("GreenBard.png");
-	sf::Sprite gbardSprite(gbard);
+	sf::Texture characterTexture14;
+	characterTexture14.loadFromFile("YellowMage.png");
+	sf::Sprite characterSprite14;
+	characterSprite14.setTexture(characterTexture14);
+	characterSprite14.setScale(scaleF, scaleF);
 
-	sf::Texture ywarrior;
-	ywarrior.loadFromFile("YellowWarrior.png");
-	sf::Sprite ywarriorSprite(ywarrior);
+	sf::Texture characterTexture15;
+	characterTexture15.loadFromFile("YellowRogue.png");
+	sf::Sprite characterSprite15;
+	characterSprite15.setTexture(characterTexture15);
+	characterSprite15.setScale(scaleF, scaleF);
 
-	sf::Texture yrogue;
-	yrogue.loadFromFile("YellowRogue.png");
-	sf::Sprite yrogueSprite(yrogue);
-
-	sf::Texture ymage;
-	ymage.loadFromFile("YellowMage.png");
-	sf::Sprite ymageSprite(ymage);
-
-	sf::Texture ybard;
-	ybard.loadFromFile("YellowBard.png");
-	sf::Sprite ybardSprite(ybard);
-
-	rwarriorSprite.setPosition(5, vMid);
-	rrogueSprite.setPosition(10, vMid);
-	rmageSprite.setPosition(15, vMid);
-	rbardSprite.setPosition(20, vMid);
-
-	gwarriorSprite.setPosition(5, vMid);
-	grogueSprite.setPosition(10, vMid);
-	gmageSprite.setPosition(15, vMid);
-	gbardSprite.setPosition(20, vMid);
-
-	ywarriorSprite.setPosition(5, vMid);
-	yrogueSprite.setPosition(10, vMid);
-	ymageSprite.setPosition(15, vMid);
-	ybardSprite.setPosition(20, vMid);
-
-	bwarriorSprite.setPosition(5, vMid);
-	brogueSprite.setPosition(10, vMid);
-	bmageSprite.setPosition(15, vMid);
-	bbardSprite.setPosition(20, vMid);
-
-	//i dont know what to do
+	sf::Texture characterTexture16;
+	characterTexture16.loadFromFile("YellowWarrior.png");
+	sf::Sprite characterSprite16;
+	characterSprite16.setTexture(characterTexture16);
+	characterSprite16.setScale(scaleF, scaleF);
 
 	while (true)
 	{
 		while (window.pollEvent(event))//poll
 		{
-			if (event.type == sf::Event::MouseButtonPressed)//
+			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
 			{
-				if (sf::Mouse::getPosition().y > vMid && sf::Mouse::getPosition().y < hMid + 1 * 32 * scaleF)
+				if (sf::Mouse::getPosition().y > hMid + 1 * 32 * scaleF)//vertical correct
 				{
-					if (sf::Mouse::getPosition().x < hMid - 5 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 5 * 32 * scaleF)
+					if (sf::Mouse::getPosition().x < hMid - window.getSize().x / 6)
 					{
-						//isthen character 1
+						//run main game.
 					}
-					else if (sf::Mouse::getPosition().x < hMid - 0 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 1 * 32 * scaleF)
+					else if (sf::Mouse::getPosition().x < hMid + window.getSize().x / 6)
 					{
-
+						beachBall(window); //runs mini games.
 					}
-					else if (sf::Mouse::getPosition().x < hMid + 1 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 0 * 32 * scaleF)
+					else
 					{
-
-					}
-					else if (sf::Mouse::getPosition().x < hMid + 2 * 32 * scaleF && sf::Mouse::getPosition().x > hMid + 1 * 32 * scaleF)
-					{
-
-					}
-					else {
-
+						exit(EXIT_SUCCESS); //closes game.
 					}
 				}
 			}
 		}
-		window.draw(backgroundSprite);
-		window.draw(rwarriorSprite);
-		window.draw(rrogueSprite);
-		window.draw(rmageSprite);
-		window.draw(rbardSprite);
-		//just kill evrything
-
-		//return characters
-		return 0;
-
 	}
 }
