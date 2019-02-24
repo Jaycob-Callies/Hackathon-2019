@@ -315,6 +315,21 @@
     <Image Include="..\..\..\..\..\OneDrive\Desktop\DnD Art Game\Picture\PrisonCell.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="ChestMiniGameCircle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ChestMiniGameSquare.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ChestMiniGameStar.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="KeyOutline.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ChestMiniGameTriangle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
     <Image Include="..\..\..\..\..\OneDrive\Desktop\DnD Art Game\Picture\Sword2.png">
       <Filter>Resource Files</Filter>
     </Image>
