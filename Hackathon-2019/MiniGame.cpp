@@ -8,6 +8,10 @@ struct Position
 	int y;
 };
 
+int game(std::vector<Character> players) {
+	return 0;
+}
+
 //Raise floor a touch higher. (Done)
 //Alter "obsticles" to be random non-moving sprites. (Done)
 //Alter jumping ability to only jump when feet touching ground or platform instead of multiple double jumps. (Done) 

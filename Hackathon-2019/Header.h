@@ -104,3 +104,5 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 int miniGameDodgeAttack(sf::RenderWindow &window);
 void beachBall(sf::RenderWindow &window);
 void mainMenu(sf::RenderWindow &window);
+std::vector<Character> characterSelect(sf::RenderWindow &window);
+int game(std::vector<Character> players);

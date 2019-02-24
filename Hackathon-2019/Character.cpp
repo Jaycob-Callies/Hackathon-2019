@@ -1,8 +1,9 @@
 #include "Header.h"
 
 
-void characterSelect(sf::RenderWindow &window)
+std::vector<Character> characterSelect(sf::RenderWindow &window)
 {
+	std::vector<Character> temp;
 	int vMid = 0, hMid = 0; //Variable Declaration.
 	double scaleF = window.getSize().y / 32.0 / 8;
 	sf::Event event;

@@ -24,6 +24,7 @@ void mainMenu(sf::RenderWindow &window)
 				{
 					if (sf::Mouse::getPosition().x < hMid - window.getSize().x / 6)
 					{
+						game(characterSelect(window));
 						//run main game.
 					}
 					else if (sf::Mouse::getPosition().x < hMid + window.getSize().x / 6)
