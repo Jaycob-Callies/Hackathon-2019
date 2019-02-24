@@ -1,6 +1,7 @@
 #include "Header.h"
 
-int main()
+
+ int main()
 {
 	//initialize values
 	int hMid = 0, vMid = 0, flag = 0;
@@ -68,7 +69,21 @@ int main()
 				else //bottom right
 				{
 					shape.setFillColor(sf::Color::Yellow);
-					miniGameRangedAttack(arrow , window, 1.0);
+					switch (rand() % 4)
+					{
+					case 1:
+						miniGameRangedAttack("FireBolt.png", window, 1.0);
+						break;
+					case 2:
+						miniGameRangedAttack("LightningBolt.png", window, 1.0);
+						break;
+					case 3:
+						miniGameRangedAttack("IceBolt.png", window, 1.0);
+						break;
+					default:
+						miniGameRangedAttack("Arrow.png", window, 1.0);
+						break;
+					}
 				}
 			}
 			if (event.type == sf::Event::Closed)

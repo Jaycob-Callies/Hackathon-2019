@@ -152,7 +152,7 @@ int MiniGameEvasion(sf::RenderWindow &window)
 
 	return amountOfCorrectResponses;
 }
-int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, double difficulty)
+int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty)
 {
 	int doorsDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
 	int time = 0, prevVel = 0;
@@ -174,7 +174,7 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 
 	//load Textures
 	sf::Texture projectileTexture;
-	projectileTexture.loadFromFile("Arrow.png");
+	projectileTexture.loadFromFile(projectileImage);
 	sf::Sprite projectileSprite;
 	projectileSprite.setTexture(projectileTexture);
 	projectileSprite.setScale(scaleF, scaleF);
@@ -191,6 +191,7 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 	sf::Sprite wallSprite(wallTexture, sf::IntRect(0, 0, 32, 8 * 32));
 	wallSprite.setScale(scaleF, scaleF);
 	wallSprite.setPosition(-hMid, -vMid);
+	wallSprite.setColor(sf::Color::Color(222, 184, 135, 255));
 
 	//hitbox
 	sf::RectangleShape hitBox(sf::Vector2f(25*scaleF, 2*scaleF));
@@ -202,6 +203,7 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 		obsticles.at(2*i).setPosition(obsticleLocations.at(i)*32 * scaleF, obsticleHeights.at(i) + 48*scaleF);
 		obsticles.push_back(sf::Sprite(wallSprite));
 		obsticles.at(2*i+1).setPosition(obsticleLocations.at(i) * 32 * scaleF, obsticleHeights.at(i) - window.getSize().y);
+
 		if (i > 0)//offset the concurrent onsticles so they dont stack
 		{
 			obsticles.at(2*i).move(obsticles.at(2*i - 2).getPosition().x, 0);
@@ -226,16 +228,26 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 		projectileSprite.move(0, prevVel + pow(2, 1.1));
 		prevVel = prevVel + pow(1.1, 2);
 		
+		//bound arrow to stay on screen
+		if (projectileSprite.getPosition().y < -8 * 2* scaleF )
+		{
+			projectileSprite.setPosition(0, -8 *2* scaleF);
+		}
+		else if (projectileSprite.getPosition().y > window.getSize().y + -8 * scaleF)
+		{
+			projectileSprite.setPosition(0, window.getSize().y - 8 * 2 * scaleF);
+		}
+
 		//set hitbox on stem of arrow
 		hitBox.setPosition(projectileSprite.getPosition().x + 5 * scaleF, projectileSprite.getPosition().y + 15 * scaleF);
 
 		//check if hitbox intersects an obsticle
 		for (int i = 0; i < obsticles.size(); i++)
 		{
-			if (hitBox.getGlobalBounds().intersects(obsticles.at(i).getGlobalBounds()) && obsticles.at(i).getColor() != sf::Color::Blue)
+			if (hitBox.getGlobalBounds().intersects(obsticles.at(i).getGlobalBounds()) && obsticles.at(i).getColor() != sf::Color::Red)
 			{
 				doorsDodged--;
-				obsticles.at(i).setColor(sf::Color::Blue);
+				obsticles.at(i).setColor(sf::Color::Red);
 			}
 		}
 
