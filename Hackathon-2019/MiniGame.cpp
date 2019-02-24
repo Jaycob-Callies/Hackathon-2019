@@ -188,6 +188,7 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 	return obstaclesDodged;
 }
 
+//make background a bit longer
 int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty)
 {
 	int doorsDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
@@ -316,10 +317,10 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 	return doorsDodged;
 }
 
-
-
-
-
+//fix skeleton bugs
+//fix speed being same for each caharacter
+//add difficulty
+//add better score output
 int miniGameDodgeAttack(sf::RenderWindow &window) {
 	//initialize
 	int limit = 0, direction = 0, direction2 = 0, direction3 = 0, direction4 = 0, randYValue = 0, randValue = 0, score = 0;
@@ -541,9 +542,162 @@ int miniGameDodgeAttack(sf::RenderWindow &window) {
 	return 0;
 }
 
-int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
+
+int miniGameKeyPuzzle(sf::RenderWindow &window)
 {
-	int correct_guess = 4;
+	int correct_guess = 4, vMid = window.getSize().y/2, hMid = window.getSize().x / 2, guess = 0;
+	double scaleF = window.getSize().y / 32 / 8;
+	sf::Event event;
+	std::vector<sf::Sprite> tines;
+
+	sf::Texture key;
+	sf::Texture triangle;
+	sf::Texture square;
+	sf::Texture star;
+	sf::Texture circle;
+	sf::Texture back;
+	sf::Texture backTile;
+
+	key.loadFromFile("KeyOutline.png");
+	triangle.loadFromFile("ChestMiniGameTriangle.png");
+	square.loadFromFile("ChestMiniGameSquare.png");
+	star.loadFromFile("ChestMiniGameStar.png");
+	circle.loadFromFile("ChestMiniGameCircle.png");
+	backTile.loadFromFile("StoneTile.png");
+	backTile.setRepeated(true);
+
+	switch (rand() % 3)
+	{
+	case 1:
+		back.loadFromFile("Door1.png");
+		break;
+	case 2:
+		back.loadFromFile("Door2.png");
+		break;
+	default:
+		back.loadFromFile("Door3.png");
+		break;
+	}
+
+	sf::Sprite keySprite(key);
+	sf::Sprite backSprite(back);
+
+	sf::Sprite triangleSprite(triangle);
+	sf::Sprite squareSprite(square);
+	sf::Sprite circleSprite(circle);
+	sf::Sprite starSprite(star);
+
+	sf::Sprite backBack(backTile, sf::IntRect(0,0,64,64));
+	for (int i = 0; i < 4; i++)
+	{
+		switch (rand() % 4)
+		{
+		case 1:
+			tines.push_back(sf::Sprite(triangle));
+			break;
+		case 2:
+			tines.push_back(sf::Sprite(square));
+			break;
+		case 3:
+			tines.push_back(sf::Sprite(star));
+			break;
+		default:
+			tines.push_back(sf::Sprite(circle));
+			break;
+		}
+		switch (i)
+		{
+		case 0:
+			tines.at(0).setPosition(hMid - scaleF * 32 * 1.125, vMid - scaleF * 32 * 2.5);
+			break;
+		case 1:
+			tines.at(1).setPosition(hMid + scaleF * 32 * 0.125, vMid - scaleF * 32 * 2.5);
+			break;
+		case 2:
+			tines.at(2).setPosition(hMid + scaleF * 32 * 1.375, vMid - scaleF * 32 * 2.5);
+			break;
+		default:
+			tines.at(3).setPosition(hMid + scaleF * 32 * 2.625, vMid - scaleF * 32 * 2.5);
+			break;
+		}
+		tines.at(i).setColor(sf::Color::Black);
+		tines.at(i).setScale(scaleF, scaleF);
+	}
+
+
+	backSprite.setScale(scaleF * 8, scaleF * 8);
+	keySprite.setScale(scaleF * 8, scaleF * 8);
+	backBack.setScale(scaleF * 8, scaleF * 8);
+	triangleSprite.setScale(scaleF , scaleF );
+	squareSprite.setScale(scaleF , scaleF );
+	circleSprite.setScale(scaleF , scaleF );
+	starSprite.setScale(scaleF , scaleF );
+
+	backSprite.move(hMid - scaleF*32*4, 0);	
+	keySprite.move(hMid - scaleF*32*4, 0);
+
+	triangleSprite.setPosition(hMid - 2 * 32 * scaleF, vMid);
+	squareSprite.setPosition(hMid - 1 * 32 * scaleF, vMid);
+	starSprite.setPosition(hMid - 0 * 32 * scaleF, vMid);
+	circleSprite.setPosition(hMid + 1 * 32 * scaleF, vMid);
+	
+	while (true)
+	{
+		while (window.pollEvent(event))//poll
+		{
+			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
+			{
+				if (sf::Mouse::getPosition().y > vMid && sf::Mouse::getPosition().y < hMid + 1 * 32 * scaleF)//vertical correct
+				{
+					if (sf::Mouse::getPosition().x < hMid - 1 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 2 * 32 * scaleF && tines.at(guess).getTexture() == &triangle)
+					{
+						correct_guess++;
+						tines.at(guess).setColor(sf::Color::White);
+					}
+					else if (sf::Mouse::getPosition().x < hMid - 0 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 1 * 32 * scaleF && tines.at(guess).getTexture() == &square)
+					{
+						correct_guess++;
+						tines.at(guess).setColor(sf::Color::White);
+					}
+					else if (sf::Mouse::getPosition().x < hMid + 1 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 0 * 32 * scaleF && tines.at(guess).getTexture() == &star)
+					{
+						correct_guess++;
+						tines.at(guess).setColor(sf::Color::White);
+					}
+					else if (sf::Mouse::getPosition().x < hMid + 2 * 32 * scaleF && sf::Mouse::getPosition().x > hMid + 1 * 32 * scaleF && tines.at(guess).getTexture() == &circle)
+					{
+						correct_guess++;
+						tines.at(guess).setColor(sf::Color::White);
+					}
+					else {
+						tines.at(guess).setColor(sf::Color::Red);
+					}
+					guess++;
+				}
+			}
+		}
+
+
+		window.clear();
+		window.draw(backBack);
+		window.draw(backSprite);
+		window.draw(keySprite);
+		window.draw(triangleSprite);
+		window.draw(squareSprite);
+		window.draw(starSprite);
+		window.draw(circleSprite);
+		for (int i = 0; i < 4; i++)
+		{
+			window.draw(tines.at(i));
+		}
+
+		if (guess > 3)
+		{
+			return correct_guess;
+		}
+
+		window.display();
+	}
 
 	return correct_guess;
 }

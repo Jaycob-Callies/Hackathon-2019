@@ -70,6 +70,7 @@
 				if (sf::Mouse::getPosition().x < hMid && sf::Mouse::getPosition().y < vMid)//top left
 				{
 					shape.setFillColor(sf::Color::Green);
+					miniGameKeyPuzzle(window);
 				}
 				else if (sf::Mouse::getPosition().x >= hMid && sf::Mouse::getPosition().y < vMid)//top right
 				{
