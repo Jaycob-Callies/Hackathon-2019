@@ -7,6 +7,9 @@ int main()
 	sf::Event event;
 	sf::Vector2f quadrant;
 
+	//initialize randomization
+	srand(time(NULL));
+
 	//create fullscreen window size of users screen
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
 	window.create(sf::VideoMode(sf::VideoMode::getFullscreenModes().at(0)), "SFML Window", sf::Style::Fullscreen);
@@ -37,6 +40,11 @@ int main()
 	shape.move((float)hMid - 100, (float)vMid - 100);
 	shape.setFillColor(sf::Color::Green);
 
+	//load images
+	sf::Image arrow;
+	arrow.loadFromFile("Arrow.png");
+
+
 	while (window.isOpen())
 	{
 
@@ -60,6 +68,7 @@ int main()
 				else //bottom right
 				{
 					shape.setFillColor(sf::Color::Yellow);
+					miniGameRangedAttack(arrow , window, 1.0);
 				}
 			}
 			if (event.type == sf::Event::Closed)
