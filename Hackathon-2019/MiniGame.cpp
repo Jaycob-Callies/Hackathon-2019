@@ -701,4 +701,3 @@ int miniGameKeyPuzzle(sf::RenderWindow &window)
 
 	return correct_guess;
 }
-}
