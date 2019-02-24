@@ -19,3 +19,4 @@ using namespace sf;
 int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty);
 int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty);
 int MiniGameEvasion(sf::RenderWindow &window);
+int miniGameDodgeAttack(sf::RenderWindow &window);
