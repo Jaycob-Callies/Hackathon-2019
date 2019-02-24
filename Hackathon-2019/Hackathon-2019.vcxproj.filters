@@ -357,6 +357,9 @@
     <Image Include="Horsetop.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Empty.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
