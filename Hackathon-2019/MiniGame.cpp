@@ -162,16 +162,16 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 	std::vector<int> obsticleLocations;
 	std::vector<double> obsticleHeights;
 	std::vector<sf::Sprite> obsticles;
-	
+
 	//4 random distances and heights
 	for (int i = 0; i < 4; i++)
 	{
-		obsticleLocations.push_back(6+ (rand() % 8));
+		obsticleLocations.push_back(6 + (rand() % 8));
 		obsticleHeights.push_back(rand() % window.getSize().y);
 	}
-	
+
 	//sum total distances
-	distance = obsticleLocations.at(0) + obsticleLocations.at(1) + obsticleLocations.at(2) + obsticleLocations.at(3) + 2*(window.getSize().x - window.getSize().y)/32/scaleF;
+	distance = obsticleLocations.at(0) + obsticleLocations.at(1) + obsticleLocations.at(2) + obsticleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32 / scaleF;
 
 	//load Textures
 	sf::Texture projectileTexture;
@@ -180,15 +180,13 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 	projectileSprite.setTexture(projectileTexture);
 	projectileSprite.setScale(scaleF, scaleF);
 
-	double scaleF = window.getSize().y / 32.0 / 8;
-
 	sf::RectangleShape whiteScreen(sf::Vector2f(window.getSize().x, window.getSize().y));
 	whiteScreen.setFillColor(sf::Color::White);
 
 	sf::Texture backgroundTexture;
 	backgroundTexture.loadFromFile("WoodFloor.png");
 	backgroundTexture.setRepeated(true);
-	sf::Sprite backgroundSprite(backgroundTexture, sf::IntRect(0, 0, 16* 32, 8 * 32));
+	sf::Sprite backgroundSprite(backgroundTexture, sf::IntRect(0, 0, distance * 32, 8 * 32));
 	backgroundSprite.setScale(scaleF, scaleF);
 	backgroundSprite.setColor(sf::Color::Color(255, 220, 190, 220));
 
@@ -201,7 +199,96 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 
 
 	//hitbox
-	sf::RectangleShape hitBox(sf::Vector2f(25*scaleF, 2*scaleF));
+	sf::RectangleShape hitBox(sf::Vector2f(25 * scaleF, 2 * scaleF));
+
+	//set locations of obsticles based on reandom values
+	for (int i = 0; i < 4; i++)
+	{
+		obsticles.push_back(sf::Sprite(wallSprite));
+		obsticles.at(2 * i).setPosition(obsticleLocations.at(i) * 32 * scaleF, obsticleHeights.at(i) + 48 * scaleF);
+		obsticles.push_back(sf::Sprite(wallSprite));
+		obsticles.at(2 * i + 1).setPosition(obsticleLocations.at(i) * 32 * scaleF, obsticleHeights.at(i) - window.getSize().y);
+
+		if (i > 0)//offset the concurrent onsticles so they dont stack
+		{
+			obsticles.at(2 * i).move(obsticles.at(2 * i - 2).getPosition().x, 0);
+			obsticles.at(2 * i + 1).move(obsticles.at(2 * i - 1).getPosition().x, 0);
+		}
+	}
+
+	//main functionality
+	while (true)//infinite loop
+	{
+		//event handling
+		while (window.pollEvent(event))//poll
+		{
+			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
+			{
+				time = 0;
+				prevVel = -20;
+			}
+		}
+
+		//exponentially decrease trajectory simulating gravity
+		projectileSprite.move(0, prevVel + pow(2, 1.1));
+		prevVel = prevVel + pow(1.1, 2);
+
+		//bound arrow to stay on screen
+		if (projectileSprite.getPosition().y < -8 * 2 * scaleF)
+		{
+			projectileSprite.setPosition(0, -8 * 2 * scaleF);
+		}
+		else if (projectileSprite.getPosition().y > window.getSize().y + -8 * scaleF)
+		{
+			projectileSprite.setPosition(0, window.getSize().y - 8 * 2 * scaleF);
+		}
+
+		//set hitbox on stem of arrow
+		hitBox.setPosition(projectileSprite.getPosition().x + 5 * scaleF, projectileSprite.getPosition().y + 15 * scaleF);
+
+		//check if hitbox intersects an obsticle
+		for (int i = 0; i < obsticles.size(); i++)
+		{
+			if (hitBox.getGlobalBounds().intersects(obsticles.at(i).getGlobalBounds()) && obsticles.at(i).getColor() != sf::Color::Red)
+			{
+				doorsDodged--;
+				obsticles.at(i).setColor(sf::Color::Red);
+			}
+		}
+
+		//draw all sprites
+		window.clear();
+		window.draw(whiteScreen);
+		backgroundSprite.move(-1 * scaleF, 0);
+		window.draw(backgroundSprite);
+		window.draw(projectileSprite);
+		for (int i = 0; i < obsticles.size(); i++)
+		{
+			obsticles.at(i).move(-1.0 * scaleF, 0.0);
+			window.draw(obsticles.at(i));
+		}
+
+		//if the last sprite moves off screen exit
+		if (obsticles.at(7).getPosition().x < 0)
+		{
+			return doorsDodged;
+		}
+
+		//if not display next frame
+		window.display();
+		time++;
+	}
+	return doorsDodged;
+}
+
+
+
+
+int miniGameDodgeAttack(sf::RenderWindow &window)
+{
+	int limit = 0, direction = 0, direction2 = 0, direction3 = 0, randYValue = 0, randValue = 0, score = 0, clicked = 4;
+double scaleF = window.getSize().y / 32.0 / 8;
+std::vector<int> characterx, charactery;
 
 	//set locations of obsticles based on reandom values
 	for (int i = 0; i < 4; i++)
@@ -316,29 +403,6 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 			attacker.move(0, -7.f);
 		}
 	}
-
-	//main functionality
-	while (true)//infinite loop
-	{
-		//event handling
-		while (window.pollEvent(event))//poll
-		{
-			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
-			{
-				time = 0;
-				prevVel = -20;
-			}
-		}
-		
-		//exponentially decrease trajectory simulating gravity
-		projectileSprite.move(0, prevVel + pow(2, 1.1));
-		prevVel = prevVel + pow(1.1, 2);
-		
-		//bound arrow to stay on screen
-		if (projectileSprite.getPosition().y < -8 * 2* scaleF )
-		{
-			projectileSprite.setPosition(0, -8 *2* scaleF);
-
 		//collison 
 			
 		if (attacker.getGlobalBounds().intersects(attackerSprite.getGlobalBounds())) {
@@ -360,29 +424,14 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 			score--;
 		}
 		if (attacker.getGlobalBounds().intersects(attackerSprite3.getGlobalBounds())) {
-				//reset 
+			//reset 
 			isHit = false;
-				
+
 			randYValue = rand() % 100 + 1;
 			randValue = randYValue;
 			attackerSprite3.setPosition(Vector2f(attackerSprite3.getPosition().x, randValue));
 			score--;
-		else if (projectileSprite.getPosition().y > window.getSize().y + -8 * scaleF)
-		{
-			projectileSprite.setPosition(0, window.getSize().y - 8 * 2 * scaleF);
-		}
 
-		//set hitbox on stem of arrow
-		hitBox.setPosition(projectileSprite.getPosition().x + 5 * scaleF, projectileSprite.getPosition().y + 15 * scaleF);
-
-		//check if hitbox intersects an obsticle
-		for (int i = 0; i < obsticles.size(); i++)
-		{
-			if (hitBox.getGlobalBounds().intersects(obsticles.at(i).getGlobalBounds()) && obsticles.at(i).getColor() != sf::Color::Red)
-			{
-				doorsDodged--;
-				obsticles.at(i).setColor(sf::Color::Red);
-			}
 		if (treasureSprite.getGlobalBounds().intersects(attacker.getGlobalBounds())) {
 				//reset 
 			isHit = false;
@@ -396,25 +445,6 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 			limit++;
 		}
 
-		//draw all sprites
-		window.clear();
-		window.draw(whiteScreen);
-		backgroundSprite.move(-1 * scaleF, 0);
-
-		window.clear(Color::White);
-		window.draw(backgroundSprite);
-		window.draw(projectileSprite);
-		for (int i = 0; i < obsticles.size(); i++)
-		{
-			obsticles.at(i).move(-1.0 * scaleF, 0.0);
-			window.draw(obsticles.at(i));
-		}
-
-		//if the last sprite moves off screen exit
-		if (obsticles.at(7).getPosition().x < 0)
-		{
-			return doorsDodged;
-		}
 
 		//if not display next frame
 		window.draw(attackerSprite);
@@ -427,7 +457,6 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 		window.display();
 		clicked--;
 	}
-	return doorsDodged;
 }
 
 int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
