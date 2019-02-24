@@ -99,6 +99,6 @@ private:
 
 int miniGameDodgeAttack(sf::RenderWindow &window);
 int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty);
-int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty);
+int miniGameKeyPuzzle(sf::RenderWindow &window);
 int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double evasionDifficulty);
 int miniGameDodgeAttack(sf::RenderWindow &window);
