@@ -35,6 +35,7 @@ class Room
 public:
 	Room() {
 		explored = 0;
+		displayed = false;
 		floorType = rand() % 4;//{Dirt, Grass, Wood, Stone};//4
 		roomType = rand() % 6;//{Trap, Monster, Chest, Empty, Hostage, Healing};//6
 		pLeft = NULL;
@@ -110,14 +111,31 @@ public:
 	}
 	void explore(){
 		explored = true;
+		Room* temp = NULL;
 		if (pTop == NULL)
-			pTop = new(Room);
+		{
+			temp = new(Room);
+			temp->setpBottom(this);
+			this->pTop = temp;
+		}
 		if (pBottom == NULL)
-			pBottom = new(Room);
+		{
+			temp = new(Room);
+			temp->setpTop(this);
+			this->pBottom = temp;
+		}
 		if (pLeft == NULL)
-			pLeft = new(Room);
+		{
+			temp = new(Room);
+			temp->setpRight(this);
+			this->pLeft = temp;
+		}
 		if (pRight == NULL)
-			pRight = new(Room);
+		{
+			temp = new(Room);
+			temp->setpLeft(this);
+			this->pRight = temp;
+		}
 	}
 	bool getExplore() {
 		return explored;
@@ -147,14 +165,31 @@ public:
 	}
 	void draw(int startx, int starty, sf::RenderWindow &window)
 	{
+		Room* temp = NULL;
 		if (pTop == NULL)
-			pTop = new(Room);
+		{
+			temp = new(Room);
+			temp->setpBottom(this);
+			this->pTop = temp;
+		}
 		if (pBottom == NULL)
-			pBottom = new(Room);
+		{
+			temp = new(Room);
+			temp->setpTop(this);
+			this->pBottom = temp;
+		}
 		if (pLeft == NULL)
-			pLeft = new(Room); 
+		{
+			temp = new(Room);
+			temp->setpRight(this);
+			this->pLeft = temp;
+		}
 		if (pRight == NULL)
-			pRight = new(Room);
+		{
+			temp = new(Room);
+			temp->setpLeft(this);
+			this->pRight = temp;
+		}
 		sf::Texture background;
 		sf::Texture wall;
 		sf::Texture doorToOut;
@@ -199,15 +234,29 @@ public:
 				window.draw(decorationSp);
 			}
 		}
+		this->displayed = true;
 
-		if (pTop->explored == true)
+		if (pTop->explored == true && pTop->displayed == false)
 			pTop->draw(startx, starty- window.getSize().y  / 18 * 6, window);
-		if (pBottom->explored == true)
+		if (pBottom->explored == true && pBottom->displayed == false)
 			pBottom->draw(startx, starty + window.getSize().y  / 18 * 6, window);
-		if (pLeft->explored == true)
+		if (pLeft->explored == true && pLeft->displayed == false)
 			pLeft->draw(startx - window.getSize().y / 18 * 6,  starty, window);
-		if (pRight->explored == true)
+		if (pRight->explored == true && pRight->displayed == false)
 			pRight->draw(startx + window.getSize().y / 18 * 6,  starty, window);
+
+	}
+	void refresh() {
+		this->displayed = false;
+
+		if (pTop->displayed == true)
+			pTop->refresh();
+		if (pBottom->displayed == true)
+			pBottom->refresh();
+		if (pLeft->displayed == true)
+			pLeft->refresh();
+		if (pRight->displayed == true)
+			pRight->refresh();
 
 	}
 	/*void dropItem(std::string itemFile){
@@ -227,6 +276,7 @@ public:
 
 private:
 	bool explored;
+	bool displayed;
 	int floorType; //{Dirt, Grass, Wood, Stone};//4
 	int roomType; //{Trap, Monster, Chest, Empty, Hostage, Healing};//6
 	//std::vector<std::string> dropped;
@@ -296,7 +346,10 @@ public:
 	std::string getName() {
 		return name;
 	}
-
+	void refresh()
+	{
+		location->refresh();
+	}
 	void display(sf::RenderWindow &window){
 		double scaleF = window.getSize().y / 32 / 18;
 		double offset = scaleF, hMid = window.getSize().x/2 - offset, vMid = window.getSize().y/2 - offset;
@@ -308,13 +361,11 @@ public:
 		fogback.setScale(scaleF, scaleF);
 		fogback.setPosition(0,0);
 
-		window.clear();
 		window.draw(fogback);
 		if (location != NULL)
 		{
 			location->draw(window.getSize().x/2 - window.getSize().y/18*3, window.getSize().y / 2 - window.getSize().y / 18 * 3, window);
 		}
-		window.display();
 	}
 private:
 	Room* location;

@@ -7,6 +7,11 @@ void mainMenu(sf::RenderWindow &window)
 	int hMid = window.getSize().x / 2, vMid = window.getSize().y / 2; //Variable Declaration.
 	double scaleF = window.getSize().y / 32.0 / 30;
 	sf::Event event;
+	std::vector<Character> temp;
+	for (int i = 0; i < 4; i++)
+	{
+		temp.push_back(*new(Character));
+	}
 
 	sf::Texture backgroundTexture1;
 	backgroundTexture1.loadFromFile("TitleScreen.png");
@@ -20,21 +25,18 @@ void mainMenu(sf::RenderWindow &window)
 		{
 			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed then...
 			{
-				if (sf::Mouse::getPosition().y > hMid + 1 * 32 * scaleF)
+				if (sf::Mouse::getPosition().x > hMid + hMid * 1 / 3)
 				{
-					if (sf::Mouse::getPosition().x < hMid - window.getSize().x / 6)
-					{
-						game(characterSelect(window), window);
-						//run main game.
-					}
-					else if (sf::Mouse::getPosition().x < hMid + window.getSize().x / 6)
-					{
-						beachBall(window); //runs mini games.
-					}
-					else
-					{
-						exit(EXIT_SUCCESS); //closes game.
-					}
+					return; //closes game.
+				}
+				else if (sf::Mouse::getPosition().x < hMid - hMid * 1 / 3)
+				{
+					game(temp/*characterSelect(window)*/, window);
+					//run main game.
+				}
+				else if (sf::Mouse::getPosition().x < hMid + window.getSize().x / 6)
+				{
+					beachBall(window); //runs mini games.
 				}
 			}
 		}

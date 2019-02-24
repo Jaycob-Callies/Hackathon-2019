@@ -9,30 +9,35 @@ std::vector<Character> characterSelect(sf::RenderWindow &window)
 	std::string newCharacterFile;
 	sf::Event event;
 	sf::Mouse mouse;
+	std::vector<sf::Sprite> characters;
 
 	sf::Texture characterTexture1;
 	characterTexture1.loadFromFile("BlueBard.png");
 	sf::Sprite characterSprite1;
 	characterSprite1.setTexture(characterTexture1);
 	characterSprite1.setScale(scaleF, scaleF);
+	characters.push_back(characterSprite1);
 
 	sf::Texture characterTexture2;
 	characterTexture2.loadFromFile("BlueMage.png");
 	sf::Sprite characterSprite2;
 	characterSprite2.setTexture(characterTexture2);
 	characterSprite2.setScale(scaleF, scaleF);
+	characters.push_back(characterSprite2);
 
 	sf::Texture characterTexture3;
 	characterTexture3.loadFromFile("BlueRogue.png");
 	sf::Sprite characterSprite3;
 	characterSprite3.setTexture(characterTexture3);
 	characterSprite3.setScale(scaleF, scaleF);
+	characters.push_back(characterSprite3);
 
 	sf::Texture characterTexture4;
 	characterTexture4.loadFromFile("BlueWarrior.png");
 	sf::Sprite characterSprite4;
 	characterSprite4.setTexture(characterTexture4);
 	characterSprite4.setScale(scaleF, scaleF);
+	characters.push_back(characterSprite4);
 
 	sf::Texture characterTexture5;
 	characterTexture5.loadFromFile("GreenBard.png");
@@ -40,74 +45,97 @@ std::vector<Character> characterSelect(sf::RenderWindow &window)
 	characterSprite5.setTexture(characterTexture5);
 	characterSprite5.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite5);
 	sf::Texture characterTexture6;
 	characterTexture6.loadFromFile("GreenMage.png");
 	sf::Sprite characterSprite6;
 	characterSprite6.setTexture(characterTexture6);
 	characterSprite6.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite6);
 	sf::Texture characterTexture7;
 	characterTexture7.loadFromFile("GreenRogue.png");
 	sf::Sprite characterSprite7;
 	characterSprite7.setTexture(characterTexture7);
 	characterSprite7.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite7);
 	sf::Texture characterTexture8;
 	characterTexture8.loadFromFile("GreenWarrior.png");
 	sf::Sprite characterSprite8;
 	characterSprite8.setTexture(characterTexture8);
 	characterSprite8.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite8);
 	sf::Texture characterTexture9;
 	characterTexture9.loadFromFile("RedBard.png");
 	sf::Sprite characterSprite9;
 	characterSprite9.setTexture(characterTexture9);
 	characterSprite9.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite9);
 	sf::Texture characterTexture10;
 	characterTexture10.loadFromFile("RedMage.png");
 	sf::Sprite characterSprite10;
 	characterSprite10.setTexture(characterTexture10);
 	characterSprite10.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite10);
 	sf::Texture characterTexture11;
 	characterTexture11.loadFromFile("RedRogue.png");
 	sf::Sprite characterSprite11;
 	characterSprite11.setTexture(characterTexture11);
 	characterSprite11.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite11);
 	sf::Texture characterTexture12;
 	characterTexture12.loadFromFile("RedWarrior.png");
 	sf::Sprite characterSprite12;
 	characterSprite12.setTexture(characterTexture12);
 	characterSprite12.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite12);
 	sf::Texture characterTexture13;
 	characterTexture13.loadFromFile("YellowBard.png");
 	sf::Sprite characterSprite13;
 	characterSprite13.setTexture(characterTexture13);
 	characterSprite13.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite13);
 	sf::Texture characterTexture14;
 	characterTexture14.loadFromFile("YellowMage.png");
 	sf::Sprite characterSprite14;
 	characterSprite14.setTexture(characterTexture14);
 	characterSprite14.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite14);
 	sf::Texture characterTexture15;
 	characterTexture15.loadFromFile("YellowRogue.png");
 	sf::Sprite characterSprite15;
 	characterSprite15.setTexture(characterTexture15);
 	characterSprite15.setScale(scaleF, scaleF);
 
+	characters.push_back(characterSprite15);
 	sf::Texture characterTexture16;
 	characterTexture16.loadFromFile("YellowWarrior.png");
 	sf::Sprite characterSprite16;
 	characterSprite16.setTexture(characterTexture16);
 	characterSprite16.setScale(scaleF, scaleF);
+	characters.push_back(characterSprite16);
+
+	
 
 	while (true)
 	{
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				characters.at(4 * i + j).setPosition(window.getSize().x / 4.0 * (j), window.getSize().y / 4.0 * (i));
+				window.draw(characters.at(4 * i + j));
+
+			}
+		}
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::MouseButtonPressed)
@@ -116,7 +144,7 @@ std::vector<Character> characterSelect(sf::RenderWindow &window)
 				{
 					for (int j = 0; j < 4; j++)
 					{
-						if((sf::Mouse::getPosition().x< window.getSize().x / 4.0 * (j+1) && sf::Mouse::getPosition().x > window.getSize().x / 4.0 * (j))
+						if ((sf::Mouse::getPosition().x< window.getSize().x / 4.0 * (j + 1) && sf::Mouse::getPosition().x > window.getSize().x / 4.0 * (j))
 							&& (sf::Mouse::getPosition().y< window.getSize().y / 4.0 * (i + 1) && sf::Mouse::getPosition().y > window.getSize().y / 4.0 * (i)))
 						{
 							switch (i)
@@ -134,7 +162,7 @@ std::vector<Character> characterSelect(sf::RenderWindow &window)
 								newCharacterFile = "Yellow";
 								break;
 							}
-							
+
 							switch (j)
 							{
 							case 1:
@@ -157,5 +185,7 @@ std::vector<Character> characterSelect(sf::RenderWindow &window)
 				}
 			}
 		}
+		if (temp.size() > 2)
+			return temp;
 	}
 }
