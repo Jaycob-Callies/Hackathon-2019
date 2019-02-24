@@ -73,36 +73,44 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 	wallSprite.setScale(scaleF, scaleF);
 	wallSprite.setPosition(-hMid, -vMid);
 
+	//hitbox
 	sf::RectangleShape hitBox(sf::Vector2f(25*scaleF, 2*scaleF));
 
+	//set locations of obsticles based on reandom values
 	for (int i = 0; i < 4; i++)
 	{
 		obsticles.push_back(sf::Sprite(wallSprite));
 		obsticles.at(2*i).setPosition(obsticleLocations.at(i)*32 * scaleF, obsticleHeights.at(i) + 48*scaleF);
 		obsticles.push_back(sf::Sprite(wallSprite));
 		obsticles.at(2*i+1).setPosition(obsticleLocations.at(i) * 32 * scaleF, obsticleHeights.at(i) - window.getSize().y);
-		if (i > 0)
+		if (i > 0)//offset the concurrent onsticles so they dont stack
 		{
 			obsticles.at(2*i).move(obsticles.at(2*i - 2).getPosition().x, 0);
 			obsticles.at(2*i+1).move(obsticles.at(2*i - 1).getPosition().x, 0);
 		}
 	}
 
-	while (wallSprite.getPosition().x > -1 * distance * 32)
+	//main functionality
+	while (true)//infinite loop
 	{
-		while (window.pollEvent(event))
+		//event handling
+		while (window.pollEvent(event))//poll
 		{
-			if (event.type == sf::Event::MouseButtonPressed)
+			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
 			{
 				time = 0;
 				prevVel = -20;
 			}
 		}
+		
+		//exponentially decrease trajectory simulating gravity
 		projectileSprite.move(0, prevVel + pow(2, 1.1));
 		prevVel = prevVel + pow(1.1, 2);
-
+		
+		//set hitbox on stem of arrow
 		hitBox.setPosition(projectileSprite.getPosition().x + 5 * scaleF, projectileSprite.getPosition().y + 15 * scaleF);
 
+		//check if hitbox intersects an obsticle
 		for (int i = 0; i < obsticles.size(); i++)
 		{
 			if (hitBox.getGlobalBounds().intersects(obsticles.at(i).getGlobalBounds()) && obsticles.at(i).getColor() != sf::Color::Blue)
@@ -111,6 +119,8 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 				obsticles.at(i).setColor(sf::Color::Blue);
 			}
 		}
+
+		//draw all sprites
 		window.clear();
 		backgroundSprite.move(-1 * scaleF, 0);
 		window.draw(backgroundSprite);
@@ -120,10 +130,14 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 			obsticles.at(i).move(-1.0 * scaleF, 0.0);
 			window.draw(obsticles.at(i));
 		}
+
+		//if the last sprite moves off screen exit
 		if (obsticles.at(7).getPosition().x < 0)
 		{
 			return doorsDodged;
 		}
+
+		//if not display next frame
 		window.display();
 		time++;
 	}
