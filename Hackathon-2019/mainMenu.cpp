@@ -4,13 +4,13 @@
 
 sf::Event event1;
 
-while (true)
-{
-	while (window.pollEvent(event1))//poll
-	{
-		if (event1.type == sf::Event::MouseButtonPressed)//if mouse pressed 
-		{
-			
-		}
-	}
-}
+//while (true)
+//{
+//	while (window.pollEvent(event1))//poll
+//	{
+//		if (event1.type == sf::Event::MouseButtonPressed)//if mouse pressed 
+//		{
+//			
+//		}
+//	}
+//}
