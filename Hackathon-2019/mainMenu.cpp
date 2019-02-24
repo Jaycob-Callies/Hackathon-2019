@@ -8,45 +8,120 @@ double scaleF = window.getSize().y / 32.0 / 8;
 
 sf::Event event;
 
-sf::Texture backgroundTexture;
-backgroundTexture.loadFromFile("TitleScreen.png", sf::IntRect(32, 0, 32, 32));
-backgroundTexture.setRepeated(true);
-sf::Sprite backgroundSprite(backgroundTexture, sf::IntRect(0, 0, distance * 32, 8 * 32)); //is the sprite necessary?
-backgroundSprite.setScale(scaleF, scaleF);
+//while (true)
+//{
+//	while (window.pollEvent(event1))//poll
+//	{
+//		if (event1.type == sf::Event::MouseButtonPressed)//if mouse pressed 
+//		{
+//			
+//		}
+//	}
+//}
 
-while (true) //Runs infinite loop. (basically while window is open).
-{
-	while (window.pollEvent(event))//poll
+void beachBall(sf::RenderWindow &window) {
+	//initialize values
+	int hMid = 0, vMid = 0, flag = 0;
+	double evasionDifficulty = 0.0;
+	string characterImage = "";
+	sf::Event event;
+	sf::Vector2f quadrant;
+
+	//set midpoints based on fullscreen resolution
+	hMid = window.getSize().x / 2;
+	vMid = window.getSize().y / 2;
+	quadrant.x = hMid;
+	quadrant.y = vMid;
+
+	//initialize quadrants for selection screen
+	sf::RectangleShape topLeft(quadrant);
+	sf::RectangleShape topRight(quadrant);
+	sf::RectangleShape bottomLeft(quadrant);
+	sf::RectangleShape bottomRight(quadrant);
+	topRight.move((float)hMid, 0.0);
+	bottomRight.move((float)hMid, (float)vMid);
+	bottomLeft.move(0.0, (float)vMid);
+	topLeft.setFillColor(sf::Color::Green);
+	topRight.setFillColor(sf::Color::Red);
+	bottomLeft.setFillColor(sf::Color::Blue);
+	bottomRight.setFillColor(sf::Color::Yellow);
+
+
+	//place middle selector
+	sf::CircleShape shape(100.f);
+	shape.move((float)hMid - 100, (float)vMid - 100);
+	shape.setFillColor(sf::Color::Green);
+
+	while (window.isOpen())
 	{
-		if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
+
+		while (window.pollEvent(event))
 		{
-			if (sf::Mouse::getPosition().y > vMid && sf::Mouse::getPosition().y < hMid + 1 * 32 * scaleF)//vertical correct
+			if (event.type == sf::Event::MouseButtonPressed)
 			{
-				if (sf::Mouse::getPosition().x < hMid - 1 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 2 * 32 * scaleF && tines.at(guess).getTexture() == &triangle)
+				if (sf::Mouse::getPosition().x < hMid && sf::Mouse::getPosition().y < vMid)//top left
 				{
-					correct_guess++;
-					tines.at(guess).setColor(sf::Color::White);
+					shape.setFillColor(sf::Color::Green);
+					miniGameKeyPuzzle(window);
 				}
-				else if (sf::Mouse::getPosition().x < hMid - 0 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 1 * 32 * scaleF && tines.at(guess).getTexture() == &square)
+				else if (sf::Mouse::getPosition().x >= hMid && sf::Mouse::getPosition().y < vMid)//top right
 				{
-					correct_guess++;
-					tines.at(guess).setColor(sf::Color::White);
+					shape.setFillColor(sf::Color::Red);
+					miniGameDodgeAttack(window);
 				}
-				else if (sf::Mouse::getPosition().x < hMid + 1 * 32 * scaleF && sf::Mouse::getPosition().x > hMid - 0 * 32 * scaleF && tines.at(guess).getTexture() == &star)
+				else if (sf::Mouse::getPosition().x < hMid && sf::Mouse::getPosition().y >= vMid)//bottom left
 				{
-					correct_guess++;
-					tines.at(guess).setColor(sf::Color::White);
+					shape.setFillColor(sf::Color::Blue);
+					switch (rand() % 5)
+					{
+					case 1:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					case 2:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					case 3:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					case 4:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					default:
+						miniGameEvasion("BlueRogue.png", window, evasionDifficulty);
+						break;
+					}
 				}
-				else if (sf::Mouse::getPosition().x < hMid + 2 * 32 * scaleF && sf::Mouse::getPosition().x > hMid + 1 * 32 * scaleF && tines.at(guess).getTexture() == &circle)
+				else //bottom right
 				{
-					correct_guess++;
-					tines.at(guess).setColor(sf::Color::White);
+					shape.setFillColor(sf::Color::Yellow);
+					switch (rand() % 4)
+					{
+					case 1:
+						miniGameRangedAttack("FireBolt.png", window, 1.0);
+						break;
+					case 2:
+						miniGameRangedAttack("LightningBolt.png", window, 1.0);
+						break;
+					case 3:
+						miniGameRangedAttack("IceBolt.png", window, 1.0);
+						break;
+					default:
+						miniGameRangedAttack("Arrow.png", window, 1.0);
+						break;
+					}
 				}
-				else {
-					tines.at(guess).setColor(sf::Color::Red);
-				}
-				guess++;
 			}
+			if (event.type == sf::Event::Closed)
+				window.close();
 		}
+		window.clear();
+
+		window.draw(topLeft);
+		window.draw(topRight);
+		window.draw(bottomLeft);
+		window.draw(bottomRight);
+
+		window.draw(shape);
+		window.display();
 	}
 }
