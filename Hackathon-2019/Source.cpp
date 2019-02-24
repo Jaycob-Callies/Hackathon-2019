@@ -13,5 +13,7 @@
 	 window.create(sf::VideoMode(sf::VideoMode::getFullscreenModes().at(0)), "SFML Window", sf::Style::Fullscreen);
 	 window.setFramerateLimit(65);
 
+	 chooseCharacter(window);
+
 	return 0;
 }
