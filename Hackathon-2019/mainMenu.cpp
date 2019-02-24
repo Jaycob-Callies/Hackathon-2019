@@ -1,23 +1,47 @@
 #include "Header.h"
 
-
-int vMid = 0, hMid = 0; //Variable Declaration.
-double scaleF = window.getSize().y / 32.0 / 8;
-
 //Shows user 3 options on menu, play game which allows user to play main DnD game, "options" which allows user to play mini games, and exit.
 
-sf::Event event;
+void mainMenu(sf::RenderWindow &window)
+{
+	int hMid = window.getSize().x / 2, vMid = window.getSize().y / 2; //Variable Declaration.
+	double scaleF = window.getSize().y / 32.0 / 30;
+	sf::Event event;
 
-//while (true)
-//{
-//	while (window.pollEvent(event1))//poll
-//	{
-//		if (event1.type == sf::Event::MouseButtonPressed)//if mouse pressed 
-//		{
-//			
-//		}
-//	}
-//}
+	sf::Texture backgroundTexture1;
+	backgroundTexture1.loadFromFile("TitleScreen.png");
+	backgroundTexture1.setRepeated(true);
+	sf::Sprite backgroundSprite1(backgroundTexture1, sf::IntRect(0, 0, window.getSize().x, window.getSize().y));
+	backgroundSprite1.setScale(scaleF, scaleF);
+
+	while (window.isOpen())
+	{
+		while (window.pollEvent(event))//poll
+		{
+			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed then...
+			{
+				if (sf::Mouse::getPosition().y > hMid + 1 * 32 * scaleF)//
+				{
+					if (sf::Mouse::getPosition().x < hMid - window.getSize().x / 6)
+					{
+						//run main game.
+					}
+					else if (sf::Mouse::getPosition().x < hMid + window.getSize().x / 6)
+					{
+						beachBall(window); //runs mini games.
+					}
+					else
+					{
+						exit(EXIT_SUCCESS); //closes game.
+					}
+				}
+			}
+		}
+		window.clear();
+		window.draw(backgroundSprite1);
+		window.display();
+	}
+}
 
 void beachBall(sf::RenderWindow &window) {
 	//initialize values
