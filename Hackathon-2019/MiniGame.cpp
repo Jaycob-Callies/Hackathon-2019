@@ -547,4 +547,3 @@ int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
 
 	return correct_guess;
 }
-}
