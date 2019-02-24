@@ -14,6 +14,8 @@
 #include <dos.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <string>
+using namespace std;
 using namespace sf;
 
 enum floorType {Dirt, Grass, Wood, Stone};//4
@@ -98,4 +100,5 @@ private:
 int miniGameDodgeAttack(sf::RenderWindow &window);
 int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty);
 int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty);
-int MiniGameEvasion(sf::RenderWindow &window); 
+int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double evasionDifficulty);
+int miniGameDodgeAttack(sf::RenderWindow &window);
