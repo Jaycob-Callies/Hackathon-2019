@@ -291,8 +291,10 @@
     <Image Include="Shield.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Sword.png" />
     <Image Include="Heart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Sword.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
