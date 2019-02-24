@@ -6,6 +6,10 @@
 #include <string>
 #include <iostream>
 #include <ctime>
+#include <time.h>
+#include <stdlib.h>
+#include <vector>
+#include <math.h>
 
 int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, double difficulty);
 int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
