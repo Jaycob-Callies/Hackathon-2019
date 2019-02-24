@@ -14,7 +14,7 @@
 	 window.setFramerateLimit(65);
 
 	 //testPlayer(window);
-	 beachBall(window);
+	 chooseCharacter(window);
 
 	return 0;
 }
