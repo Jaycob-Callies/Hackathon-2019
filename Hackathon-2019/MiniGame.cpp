@@ -49,7 +49,7 @@ int miniGameRangedAttack(sf::Image projectileImage, sf::RenderWindow &window, do
 
 	return doorsDodged;
 }
-int miniGameKeyPuzzle(sf::Image key, sf::RenderWindow &window, double difficulty)
+int miniGameKeyPuzzle(sf::RenderWindow &window, double difficulty)
 {
 	int correct_guess = 0;
 	sf::Texture key1Texture;
