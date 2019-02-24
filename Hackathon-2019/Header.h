@@ -18,9 +18,6 @@
 using namespace std;
 using namespace sf;
 
-enum floorType {Dirt, Grass, Wood, Stone};//4
-enum roomType {Trap, Monster, Chest, Empty, Hostage, Healing};//6
-
 struct stats {
 	int health;
 	int maxHealth;
@@ -35,12 +32,60 @@ class Room
 public:
 	Room() {
 		explored = 0;
-		floorType = rand() % 4;
-		roomType = rand() % 6;
+		floorType = rand() % 4;//{Dirt, Grass, Wood, Stone};//4
+		roomType = rand() % 6;//{Trap, Monster, Chest, Empty, Hostage, Healing};//6
 		pLeft = NULL;
 		pRight = NULL;
 		pTop = NULL;
 		pBottom = NULL;
+		for (int i = 0; i < 16; i++)
+		{
+			if (i == 0)
+			{
+				switch (roomType)
+				{
+				case 0:
+					decorations.push_back("PitFullOfSpikes.png");
+					break;
+				case 1:
+					decorations.push_back("WMTop.png");
+					break;
+				case 2:
+					decorations.push_back("ChestTop.png");
+					break;
+				case 3:
+					decorations.push_back("Empty.png");
+					break;
+				case 4:
+					decorations.push_back("DIDTop.png");
+					break;
+				default:
+					decorations.push_back("HealthTemple.png");
+					break;
+				}
+				i++;
+			}
+			switch (rand() % 8)
+			{
+			case 0:
+				if (floorType < 2)
+					decorations.push_back("GrassBlades.png");
+				else
+					decorations.push_back("Shield.png");
+				break;
+			case 1:
+				decorations.push_back("Knapsack.png");
+				break;
+			case 2:
+				if (floorType < 2)
+					decorations.push_back("Sword.png");
+				else
+					decorations.push_back("Table.png");
+				default:
+					decorations.push_back("Empty.png");
+				break;
+			}
+		}
 	}
 	~Room() {
 		delete pLeft;
@@ -61,15 +106,122 @@ public:
 		pTop = newpTop;
 	}
 	void explore(){
-		explored = 1;
+		explored = true;
+		if (pTop == NULL)
+			pTop = new(Room);
+		if (pBottom == NULL)
+			pBottom = new(Room);
+		if (pLeft == NULL)
+			pLeft = new(Room);
+		if (pRight == NULL)
+			pRight = new(Room);
 	}
+	Room* getpTop() {
+		return pTop;
+	}	
+	Room* getpBottom() {
+		return pBottom;
+	}
+	Room* getpLeft() {
+		return pLeft;
+	}
+	Room* getpRight() {
+		return pRight;
+	}
+	int getFloorType()
+	{
+		return floorType;
+	}
+	int getRoomType()
+	{
+		return roomType;
+	}
+	void draw(int startx, int starty, sf::RenderWindow &window)
+	{
+		if (pTop == NULL)
+			pTop = new(Room);
+		if (pBottom == NULL)
+			pBottom = new(Room);
+		if (pLeft == NULL)
+			pLeft = new(Room); 
+		if (pRight == NULL)
+			pRight = new(Room);
+		sf::Texture background;
+		sf::Texture wall;
+		sf::Texture doorToOut;
+		sf::Texture doorToIn;
+		
+		//background
+		switch (floorType)//{Dirt, Grass, Wood, Stone};//4
+		{
+		case 0:
+			background.loadFromFile("Dirt.png");
+			break;
+		case 1:
+			background.loadFromFile("Grass.png");
+			break;
+		case 2:
+			background.loadFromFile("WoodFloor.png");
+			break;
+		default:
+			background.loadFromFile("StoneTile.png");
+			break;
+		}
+		background.setRepeated(true);
+		sf::Sprite backgroundSprite(background, sf::IntRect(0, 0, 192, 192));
+		backgroundSprite.move(startx, starty);
+		backgroundSprite.setScale(window.getSize().y/32.0/ 18.0, window.getSize().y / 32.0 / 18.0);
+		window.draw(backgroundSprite);
 
+		//decos
+		sf::Texture decoration;
+		decoration.loadFromFile(decorations.at(0));
+		sf::Sprite decorationSp(decoration);
+		//decorationSp.setScale(window.getSize().y / 32.0 / 18.0, window.getSize().y / 32.0 / 18.0);
+		//decorationSp.setPosition(startx + window.getSize().y / 32.0 / 18.0, starty + window.getSize().y / 32.0 / 18.0);
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				decoration.loadFromFile(decorations.at(4 * i + j));
+				decorationSp.setTexture(decoration);
+				decorationSp.setScale(window.getSize().y / 32.0 / 18.0, window.getSize().y / 32.0 / 18.0);
+				decorationSp.setPosition(startx + window.getSize().y / 18.0 * (1.0 + j), starty + window.getSize().y / 18.0 * (1.0 + i));
+				window.draw(decorationSp);
+			}
+		}
+
+		if (pTop->explored == true)
+			pTop->draw(startx, starty- window.getSize().y  / 18 * 6, window);
+		if (pBottom->explored == true)
+			pBottom->draw(startx, starty + window.getSize().y  / 18 * 6, window);
+		if (pLeft->explored == true)
+			pLeft->draw(startx - window.getSize().y / 18 * 6,  starty, window);
+		if (pRight->explored == true)
+			pRight->draw(startx + window.getSize().y / 18 * 6,  starty, window);
+
+	}
+	/*void dropItem(std::string itemFile){
+		dropped.push_back(itemFile);
+	}
+	std::string pickupItem(std::string itemFile) {
+		for (std::vector<std::string>::iterator i = dropped.begin(); i != dropped.end(); i++)
+		{
+			if ((*i).data == itemFile)
+			{
+				dropped.erase(i, i);
+				return itemFile;
+			}
+		}
+		return "";
+	}*/
 
 private:
 	bool explored;
-	int floorType;
-	int roomType;
-	std::vector<std::string> dropped;
+	int floorType; //{Dirt, Grass, Wood, Stone};//4
+	int roomType; //{Trap, Monster, Chest, Empty, Hostage, Healing};//6
+	//std::vector<std::string> dropped;
+	std::vector<std::string> decorations;
 	Room* pLeft;
 	Room* pTop;
 	Room* pRight;
@@ -80,21 +232,90 @@ private:
 class Character{
 
 public:
-	//void addWeapon(sf::Image){
-		
-	//}
-	//void addHealth(int *currentHealth) {
+	Character() {
+		location = NULL;
+		stats = { 10,10,5,5,5,5 };
+		weapon = potion = follower = file = name = "";
+	}
+	~Character() {
+	}
+	void setLocation(Room*newLocation) {
+		location = newLocation;
+	}
+	void setStats(Stats newStats) {
+		stats = newStats;
+	}
+	void setWeapon(std::string newWeapon) {
+		weapon = newWeapon;
+	}	
+	void setPotion(std::string newPotion) {
+		potion = newPotion;
+	}
+	void setFollower(std::string newFollower) {
+		follower = newFollower;
+	}
+	void setFile(std::string newFile) {
+		file = newFile;
+	}
+	void setTopFile(std::string newTopFile) {
+		topFile = newTopFile;
+	}
+	void setName(std::string newName) {
+		name = newName;
+	}
+	Room* getLocation() {
+		return location;
+	}
+	Stats getStats() {
+		return stats;
+	}
+	std::string getWeapon() {
+		return weapon;
+	}
+	std::string getPotion() {
+		return potion;
+	}
+	std::string getFollower() {
+		return follower;
+	}
+	std::string getFile() {
+		return file;
+	}
+	std::string getTopFile() {
+		return topFile;
+	}
+	std::string getName() {
+		return name;
+	}
 
-	//}
-	//void characterMovement() {
+	void display(sf::RenderWindow &window){
+		double scaleF = window.getSize().y / 32 / 18;
+		double offset = scaleF, hMid = window.getSize().x/2 - offset, vMid = window.getSize().y/2 - offset;
 
-	//}
+		sf::Texture fog;
+		fog.loadFromFile("FogCorners.png", sf::IntRect(32, 32, 32, 32));
+		fog.setRepeated(true);
+		sf::Sprite fogback(fog, sf::IntRect(32, 32, window.getSize().x, window.getSize().y));
+		fogback.setScale(scaleF, scaleF);
+		fogback.setPosition(0,0);
+
+		window.clear();
+		window.draw(fogback);
+		if (location != NULL)
+		{
+			location->draw(window.getSize().x/2 - window.getSize().y/18*3, window.getSize().y / 2 - window.getSize().y / 18 * 3, window);
+		}
+		window.display();
+	}
 private:
 	Room* location;
 	Stats stats;
 	std::string weapon;
 	std::string potion;
 	std::string follower;
+	std::string file;
+	std::string topFile;
+	std::string name;
 };
 
 int miniGameDodgeAttack(sf::RenderWindow &window);
@@ -102,3 +323,5 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 int miniGameKeyPuzzle(sf::RenderWindow &window);
 int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double evasionDifficulty);
 int miniGameDodgeAttack(sf::RenderWindow &window);
+void beachBall(sf::RenderWindow &window);
+void testPlayer(sf::RenderWindow &window);

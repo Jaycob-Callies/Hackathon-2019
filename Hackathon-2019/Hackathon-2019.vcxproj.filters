@@ -333,6 +333,9 @@
     <Image Include="..\..\..\..\..\OneDrive\Desktop\DnD Art Game\Picture\Sword2.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Empty.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
