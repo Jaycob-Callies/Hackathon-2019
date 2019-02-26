@@ -184,6 +184,15 @@ std::vector<Character> characterSelect(sf::RenderWindow &window)
 					}
 				}
 			}
+			//if (event.type == sf::Event::TextEntered)
+			//{
+			//	// Handle ASCII characters only
+			//	if (event.Text.Unicode < 128)
+			//	{
+			//		str += static_cast<char>(event.Text.Unicode);
+			//		text.SetText(str);
+			//	}
+			//}
 		}
 		if (temp.size() > 2)
 			return temp;

@@ -5,43 +5,88 @@
 void mainMenu(sf::RenderWindow &window)
 {
 	int hMid = window.getSize().x / 2, vMid = window.getSize().y / 2; //Variable Declaration.
-	double scaleF = window.getSize().y / 32.0 / 30;
+	float textureBitsX = 1400.0, textureBitsY = 1050.0, scaleF = 0.0, yOffset = 0.0, xOffset = 0.0;//1400x1050
 	sf::Event event;
-	std::vector<Character> temp;
-	for (int i = 0; i < 4; i++)
+	sf::Text userInput;
+
+	//set scaleF to scale needed in order to make a minTexturesPerScreenLength long square of tiles in the center of the screen
+	if (window.getSize().x /1400.0> window.getSize().y/1050.0)//landscape view(horizontal longer than vertical)
 	{
-		temp.push_back(*new(Character));
+		scaleF = window.getSize().y / textureBitsY;
+		xOffset = ((window.getSize().x - (textureBitsX * scaleF))/2.0);
+	}
+	else//portrait view(horizontal narrower than vertical)
+	{
+		scaleF = window.getSize().x / textureBitsX;
+		yOffset = ((window.getSize().y - (textureBitsY * scaleF)) / 2.0);
 	}
 
+	//scale and translate Menu Screen
 	sf::Texture backgroundTexture1;
 	backgroundTexture1.loadFromFile("TitleScreen.png");
-	backgroundTexture1.setRepeated(true);
-	sf::Sprite backgroundSprite1(backgroundTexture1, sf::IntRect(0, 0, window.getSize().x, window.getSize().y));
+	sf::Sprite backgroundSprite1(backgroundTexture1);
 	backgroundSprite1.setScale(scaleF, scaleF);
+	backgroundSprite1.move(xOffset, yOffset);
 
+	//create overlay sprites for user feedback
+	sf::Sprite startSprite(backgroundTexture1, sf::IntRect(82, 845, 352, 70));
+	sf::Sprite optionsSprite(backgroundTexture1, sf::IntRect(472, 842, 519, 70));
+	sf::Sprite quitSprite(backgroundTexture1, sf::IntRect(1059, 842, 281, 72));
+	//scalea overlay sprites
+	startSprite.setScale(scaleF, scaleF);
+	optionsSprite.setScale(scaleF, scaleF);
+	quitSprite.setScale(scaleF, scaleF);
+	//darken and transparency
+	startSprite.setColor(sf::Color(0, 0, 0, 100));
+	optionsSprite.setColor(sf::Color(0, 0, 0, 100));
+	quitSprite.setColor(sf::Color(0, 0, 0, 100));
+	//move to overlay the selections
+	startSprite.move(backgroundSprite1.getPosition().x + 82 * scaleF, backgroundSprite1.getPosition().y + 845 * scaleF);
+	optionsSprite.move(backgroundSprite1.getPosition().x + 472 * scaleF, backgroundSprite1.getPosition().y + 842 * scaleF);
+	quitSprite.move(backgroundSprite1.getPosition().x + 1059 * scaleF, backgroundSprite1.getPosition().y + 842 * scaleF);
+
+
+	
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))//poll
 		{
 			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed then...
 			{
-				if (sf::Mouse::getPosition().x > hMid + hMid * 1 / 3)
+				//preform action if one is highlighted
+				if (startSprite.getGlobalBounds().contains(sf::Vector2<float>(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)))
 				{
-					return; //closes game.
-				}
-				else if (sf::Mouse::getPosition().x < hMid - hMid * 1 / 3)
-				{
-					game(temp/*characterSelect(window)*/, window);
+					game(characterSelect(window), window);
 					//run main game.
 				}
-				else if (sf::Mouse::getPosition().x < hMid + window.getSize().x / 6)
+				if (optionsSprite.getGlobalBounds().contains(sf::Vector2<float>(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)))
 				{
 					beachBall(window); //runs mini games.
 				}
+				if (quitSprite.getGlobalBounds().contains(sf::Vector2<float>(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)))
+				{
+					return;//closes game.
+				}
 			}
 		}
+		//reset frame
 		window.clear();
+		//draw background
 		window.draw(backgroundSprite1);
+		//if cursor is over any selections draw their highlight
+		if (startSprite.getGlobalBounds().contains(sf::Vector2<float>(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)))
+		{
+			window.draw(startSprite);
+		}
+		if (optionsSprite.getGlobalBounds().contains(sf::Vector2<float>(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)))
+		{
+			window.draw(optionsSprite);
+		}		
+		if (quitSprite.getGlobalBounds().contains(sf::Vector2<float>(sf::Mouse::getPosition().x, sf::Mouse::getPosition().y)))
+		{
+			window.draw(quitSprite);
+		}
+		//display frame
 		window.display();
 	}
 }
@@ -57,8 +102,8 @@ void beachBall(sf::RenderWindow &window) {
 	//set midpoints based on fullscreen resolution
 	hMid = window.getSize().x / 2;
 	vMid = window.getSize().y / 2;
-	quadrant.x = hMid;
-	quadrant.y = vMid;
+	quadrant.x = (float)hMid;
+	quadrant.y = (float)vMid;
 
 	//initialize quadrants for selection screen
 	sf::RectangleShape topLeft(quadrant);

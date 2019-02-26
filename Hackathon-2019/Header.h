@@ -213,8 +213,8 @@ public:
 		}
 		background.setRepeated(true);
 		sf::Sprite backgroundSprite(background, sf::IntRect(0, 0, 192, 192));
-		backgroundSprite.move(startx, starty);
-		backgroundSprite.setScale(window.getSize().y/32.0/ 18.0, window.getSize().y / 32.0 / 18.0);
+		backgroundSprite.move((float)startx, (float)starty);
+		backgroundSprite.setScale(window.getSize().y/ (float)32.0/ (float)18.0, window.getSize().y / (float)32.0 / (float)18.0);
 		window.draw(backgroundSprite);
 
 		//decos
@@ -229,8 +229,8 @@ public:
 			{
 				decoration.loadFromFile(decorations.at(4 * i + j));
 				decorationSp.setTexture(decoration);
-				decorationSp.setScale(window.getSize().y / 32.0 / 18.0, window.getSize().y / 32.0 / 18.0);
-				decorationSp.setPosition(startx + window.getSize().y / 18.0 * (1.0 + j), starty + window.getSize().y / 18.0 * (1.0 + i));
+				decorationSp.setScale(window.getSize().y / (float)32.0 / (float)18.0, window.getSize().y / (float)32.0 / (float)18.0);
+				decorationSp.setPosition(startx + window.getSize().y / (float)18.0 * (float)(1.0 + j), starty + window.getSize().y / (float)18.0 * (float)(1.0 + i));
 				window.draw(decorationSp);
 			}
 		}
@@ -351,8 +351,8 @@ public:
 		location->refresh();
 	}
 	void display(sf::RenderWindow &window){
-		double scaleF = window.getSize().y / 32 / 18;
-		double offset = scaleF, hMid = window.getSize().x/2 - offset, vMid = window.getSize().y/2 - offset;
+		float scaleF = window.getSize().y / 32 / 18;
+		float offset = scaleF, hMid = window.getSize().x/2 - offset, vMid = window.getSize().y/2 - offset;
 
 		sf::Texture fog;
 		fog.loadFromFile("FogCorners.png", sf::IntRect(32, 32, 32, 32));
