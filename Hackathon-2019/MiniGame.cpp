@@ -9,41 +9,28 @@ struct Position
 };
 
 int game(std::vector<Character> players, sf::RenderWindow &window) {
-	Character tempC;
 	Room* roomP = NULL;
-	roomP = new(Room);
-	tempC.setLocation(roomP);
+	roomP = new(Room)(sf::Vector2i(0,0));
 	roomP->explore();
-	//int peopleAlive = 16;
-	//players.clear();
-	//std::vector<Character> temp;
-	//Room* roomP = NULL;
-	//roomP = new(Room);
-	//roomP->explore();
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	temp.push_back(*new(Character));
-	//	temp.at(i).setLocation(roomP);
-	//}
-	//players = temp;
-	//while (peopleAlive>0) {
-	//	for (int i = 0; i < players.size(); i++)
-	//	{
-	//		if (players.at(i).getStats().health>0)
-	//		play(window, players.at(i));
-	//	}
-	//	peopleAlive = 0;
-	//	for (int i = 0; i < players.size(); i++)
-	//	{
-	//		if (players.at(i).getStats().health > 0)
-	//		{
-	//			peopleAlive++;
-	//		}
-	//	}
-	//}
-	while (tempC.getStats().health > 0)
+	int peopleAlive = players.size();
+	for (int i = 0; i < peopleAlive; i++)
 	{
-		play(window, tempC);
+		players.at(i).setLocation(roomP);
+	}
+	while (peopleAlive>0) {
+		for (int i = 0; i < players.size(); i++)
+		{
+			if (players.at(i).getStats().health>0)
+			play(window, players.at(i));
+		}
+		peopleAlive = 0;
+		for (int i = 0; i < players.size(); i++)
+		{
+			if (players.at(i).getStats().health > 0)
+			{
+				peopleAlive++;
+			}
+		}
 	}
 	return 0;
 }
@@ -742,10 +729,11 @@ int miniGameKeyPuzzle(sf::RenderWindow &window)
 	return correct_guess;
 }
 
-void play(sf::RenderWindow &window, Character player) {
+void play(sf::RenderWindow &window, Character &player) {
 	sf::Event event;
-	Room* targetRoom;
-	while (true)
+	Room* targetRoom = NULL;
+	bool skip = true;
+	while (skip)
 	{
 		while (window.pollEvent(event))//poll
 		{
@@ -754,17 +742,18 @@ void play(sf::RenderWindow &window, Character player) {
 			player.refresh();
 			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed go direction
 			{
+				skip = false;
 				if ((sf::Mouse::getPosition().x > window.getSize().x/2 - window.getSize().x / 10.0 && sf::Mouse::getPosition().x < window.getSize().x/2 + window.getSize().x / 10.0)
 					&& (sf::Mouse::getPosition().y > window.getSize().y/2 - window.getSize().y / 6.0 && sf::Mouse::getPosition().y < window.getSize().y/2 + window.getSize().y / 6.0))
 				{
 					targetRoom = player.getLocation();
 				}
-				else if (sf::Mouse::getPosition().x < window.getSize().x/2 - window.getSize().x / 10.0
+				else if ((sf::Mouse::getPosition().x < window.getSize().x/2 - window.getSize().x / 10.0 && sf::Mouse::getPosition().x > window.getSize().x / 2 - 3*window.getSize().x / 10.0)
 					&& (sf::Mouse::getPosition().y > window.getSize().y/2 - window.getSize().y / 6.0 && sf::Mouse::getPosition().y < window.getSize().y/2 + window.getSize().y / 6.0))
 				{
 					targetRoom = player.getLocation()->getpLeft();
 				}
-				else if (sf::Mouse::getPosition().x > window.getSize().x/2 + window.getSize().x / 10.0
+				else if ((sf::Mouse::getPosition().x > window.getSize().x/2 + window.getSize().x / 10.0 && sf::Mouse::getPosition().x < window.getSize().x / 2 + 3 * window.getSize().x / 10.0)
 					&& (sf::Mouse::getPosition().y > window.getSize().y/2 - window.getSize().y / 6.0 && sf::Mouse::getPosition().y < window.getSize().y/2 + window.getSize().y / 6.0))
 				{
 					targetRoom = player.getLocation()->getpRight();
@@ -774,59 +763,78 @@ void play(sf::RenderWindow &window, Character player) {
 				{
 					targetRoom = player.getLocation()->getpTop();
 				}
-				else
+				else if((sf::Mouse::getPosition().x > window.getSize().x / 2 - window.getSize().x / 10.0 && sf::Mouse::getPosition().x < window.getSize().x / 2 + window.getSize().x / 10.0)
+					&& sf::Mouse::getPosition().y > window.getSize().y / 2 + window.getSize().y / 6.0)
 				{
 					targetRoom = player.getLocation()->getpBottom();
 				}
-				if (targetRoom->getExplore() == false)
+				else
 				{
-					if (4 == miniGameKeyPuzzle(window));
-					targetRoom->explore();
-					player.setLocation(targetRoom);
+					skip = true;
 				}
-				else if (targetRoom != player.getLocation())
+
+				if (skip == false)//valid click
 				{
-					if (targetRoom->getRoomType() == 1)
+					if (targetRoom->getExplore() == false)//new room
 					{
-						miniGameRangedAttack("Arrow.png", window, 1);
-						targetRoom->kill();
+						if (4 == miniGameKeyPuzzle(window));//passed lockpick
+						targetRoom->explore();
+						player.setLocation(targetRoom);
+						return;
 					}
-					else //(player.getLocation()->getRoomType() == 0)
+					else if (targetRoom != player.getLocation())//not new room, not current room
 					{
-						if (4 == miniGameEvasion("Bear.png", window, 1))
+						if (targetRoom->getRoomType() == 1)//if its a monster
 						{
-							player.setLocation(targetRoom);
+							miniGameRangedAttack("Arrow.png", window, 1);
+							targetRoom->kill();
+							return;
+						}
+						else if (player.getLocation()->getRoomType() == 0)//moving out of trap
+						{
+							if (4 == miniGameEvasion("Bear.png", window, 1))
+							{
+								player.setLocation(targetRoom);
+								return;
+							}
+						}
+						player.setLocation(targetRoom);
+						return;
+					}
+					else//current room
+					{
+						switch (targetRoom->getRoomType())//{Trap, Monster, Chest, Empty, Hostage, Healing};//6
+						{
+						case 0://trap
+							miniGameEvasion("Bear.png", window, 1);
+							return;
+							break;
+						case 1://monster
+							miniGameDodgeAttack(window);
+							return;
+							break;
+						case 2://Chest
+							if (4 == miniGameKeyPuzzle(window));
+							player.setPotion("Potion.png");
+							return;
+							break;
+						case 3://empty
+							return;
+							break;
+						case 4://hostage
+							player.setFollower("DamselInDistress.png");
+							return;
+							break;
+						default://healing
+							Stats newS = { player.getStats().maxHealth,player.getStats().maxHealth,player.getStats().intelligence,player.getStats().sanity,player.getStats().strength,player.getStats().speed};
+							player.setStats(newS);
+							return;
+							break;
 						}
 					}
 				}
-				else
-					switch (targetRoom->getRoomType())//{Trap, Monster, Chest, Empty, Hostage, Healing};//6
-					{
-					case 0:
-						miniGameEvasion("Bear.png", window, 1);
-						return;
-						break;
-					case 1:
-						miniGameDodgeAttack(window);
-						return;
-						break;
-					case 2:
-						if (4 == miniGameKeyPuzzle(window));
-						player.setPotion("Potion.png");
-						return;
-						break;
-					case 3:
-						return;
-						break;
-					case 4:
-						player.setFollower("DamselInDistress.png");
-						break;
-					default:
-						break;
-					}
 			}
 			window.display();
 		}
 	}
-
 }

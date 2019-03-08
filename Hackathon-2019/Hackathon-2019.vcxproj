@@ -247,6 +247,9 @@
     <Image Include="YRTop.png" />
     <Image Include="YWTop.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="8bit.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

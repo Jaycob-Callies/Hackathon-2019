@@ -2,7 +2,7 @@
 
 void testPlayer(sf::RenderWindow &window) {
 	sf::Event event;
-	Room start;
+	Room start(sf::Vector2i(0,0));
 	start.explore();
 	start.getpLeft()->explore();
 	start.getpRight()->explore();

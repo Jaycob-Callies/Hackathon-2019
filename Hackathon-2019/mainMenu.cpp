@@ -7,10 +7,9 @@ void mainMenu(sf::RenderWindow &window)
 	int hMid = window.getSize().x / 2, vMid = window.getSize().y / 2; //Variable Declaration.
 	float textureBitsX = 1400.0, textureBitsY = 1050.0, scaleF = 0.0, yOffset = 0.0, xOffset = 0.0;//1400x1050
 	sf::Event event;
-	sf::Text userInput;
 
 	//set scaleF to scale needed in order to make a minTexturesPerScreenLength long square of tiles in the center of the screen
-	if (window.getSize().x /1400.0> window.getSize().y/1050.0)//landscape view(horizontal longer than vertical)
+	if (window.getSize().x /textureBitsX> window.getSize().y/textureBitsY)//landscape view(horizontal longer than vertical)
 	{
 		scaleF = window.getSize().y / textureBitsY;
 		xOffset = ((window.getSize().x - (textureBitsX * scaleF))/2.0);
@@ -26,7 +25,7 @@ void mainMenu(sf::RenderWindow &window)
 	backgroundTexture1.loadFromFile("TitleScreen.png");
 	sf::Sprite backgroundSprite1(backgroundTexture1);
 	backgroundSprite1.setScale(scaleF, scaleF);
-	backgroundSprite1.move(xOffset, yOffset);
+	backgroundSprite1.setPosition(xOffset, yOffset);
 
 	//create overlay sprites for user feedback
 	sf::Sprite startSprite(backgroundTexture1, sf::IntRect(82, 845, 352, 70));
@@ -41,9 +40,9 @@ void mainMenu(sf::RenderWindow &window)
 	optionsSprite.setColor(sf::Color(0, 0, 0, 100));
 	quitSprite.setColor(sf::Color(0, 0, 0, 100));
 	//move to overlay the selections
-	startSprite.move(backgroundSprite1.getPosition().x + 82 * scaleF, backgroundSprite1.getPosition().y + 845 * scaleF);
-	optionsSprite.move(backgroundSprite1.getPosition().x + 472 * scaleF, backgroundSprite1.getPosition().y + 842 * scaleF);
-	quitSprite.move(backgroundSprite1.getPosition().x + 1059 * scaleF, backgroundSprite1.getPosition().y + 842 * scaleF);
+	startSprite.setPosition(backgroundSprite1.getPosition().x + 82.0 * scaleF, backgroundSprite1.getPosition().y + 845.0 * scaleF);
+	optionsSprite.setPosition(backgroundSprite1.getPosition().x + 472.0 * scaleF, backgroundSprite1.getPosition().y + 842.0 * scaleF);
+	quitSprite.setPosition(backgroundSprite1.getPosition().x + 1059.0 * scaleF, backgroundSprite1.getPosition().y + 842.0 * scaleF);
 
 
 	
