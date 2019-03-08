@@ -1,7 +1,5 @@
 #include "Header.h"
 
-
-
 struct Position
 {
 	int x;
@@ -58,21 +56,27 @@ int game(std::vector<Character> players, sf::RenderWindow &window) {
 
 int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double evasionDifficulty)
 {
-	window.setFramerateLimit(60);
+	//timing for gravity simulation
+	float framesPerSec = 60, deltaT = 0, tAirborne = 0, startingVel = 2;
+	deltaT = 1 / framesPerSec;
+	window.setFramerateLimit(framesPerSec);
 
+	//variable declaration
 	int obstaclesDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
 	int time = 0, prevVel = 0, onFloor = 0;
 	double speed = evasionDifficulty * .1, scaleF = window.getSize().y / 32.0 / 8;
 	sf::Event event;
 	std::vector<int> obstacleLocations;
 	std::vector<sf::Sprite> obstacles;
+	startingVel = startingVel * scaleF * 60 * deltaT;
+
 
 	for (int i = 0; i < 4; i++)
 	{
 		obstacleLocations.push_back(6 + (rand() % 8));
 	}
 
-	distance = obstacleLocations.at(0) + obstacleLocations.at(1) + obstacleLocations.at(2) + obstacleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32 / scaleF;
+	distance = obstacleLocations.at(0) + obstacleLocations.at(1) + obstacleLocations.at(2) + obstacleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32;
 
 	sf::Texture characterTexture;
 	characterTexture.loadFromFile(characterImage);
@@ -156,7 +160,10 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 			obstacles.at(i).move(obstacles.at(i - 1).getPosition().x, 0);
 		}
 	}
+
+	//set character to start below screen
 	characterSprite.setPosition(0, window.getSize().y);
+
 	//main functionality
 	while (true)//infinite loop
 	{
@@ -169,22 +176,23 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 				{
 					onFloor = 0;
 					time = 0;
-					prevVel = -20; //bad solution for hang time issue, but possible.
+					prevVel = startingVel;
+					tAirborne = 0;
 				}
 			}
 		}
 
 		//exponentially decrease trajectory simulating gravity
-
-		characterSprite.move(0, -1*(225 - pow(time-15, 2))/20);//(prevVel + pow(2, 1.1)) * 1.5);
-		prevVel = (prevVel + pow(1.1, 2) * 0.75);
+		characterSprite.move(0, -1.4*prevVel + (4.9*scaleF*tAirborne));//(prevVel + pow(2, 1.1)) * 1.5);
+		tAirborne = tAirborne + deltaT;
 
 		//bound character to stay on screen.
 
-		if (characterSprite.getPosition().y > window.getSize().y + -30 * scaleF)
+		if (characterSprite.getPosition().y > window.getSize().y - 30 * scaleF)
 		{
 			characterSprite.setPosition(0, window.getSize().y - 30 * scaleF);
 			onFloor = 1;
+			//tAirborne = 0;
 		}
 
 		//set hitbox for player.
@@ -231,6 +239,12 @@ int miniGameEvasion(std::string characterImage, sf::RenderWindow &window, double
 //make background a bit longer
 int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, double difficulty)
 {
+	//timing for gravity simulation
+	float framesPerSec = 60, deltaT = 0, tAirborne = 0, startingVel = 2;
+	deltaT = 1 / framesPerSec;
+	window.setFramerateLimit(framesPerSec);
+
+	//variables
 	int doorsDodged = 4, hMid = window.getSize().x / 2, vMid = window.getSize().y / 2, walls = 4, distance = 0;
 	int time = 0, prevVel = 0;
 	double speed = difficulty * .1, scaleF = window.getSize().y / 32.0 / 8;
@@ -247,7 +261,7 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 	}
 
 	//sum total distances
-	distance = obsticleLocations.at(0) + obsticleLocations.at(1) + obsticleLocations.at(2) + obsticleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32 / scaleF;
+	distance = obsticleLocations.at(0) + obsticleLocations.at(1) + obsticleLocations.at(2) + obsticleLocations.at(3) + 2 * (window.getSize().x - window.getSize().y) / 32 ;
 
 	//load Textures
 	sf::Texture projectileTexture;
@@ -301,22 +315,23 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 			if (event.type == sf::Event::MouseButtonPressed)//if mouse pressed send arrow trajectory up
 			{
 				time = 0;
-				prevVel = -20;
+				prevVel = startingVel;
+				tAirborne = 0;
 			}
 		}
 
 		//exponentially decrease trajectory simulating gravity
-		projectileSprite.move(0, prevVel + pow(2, 1.1));
-		prevVel = prevVel + pow(1.1, 2);
+		projectileSprite.move(0, -3*prevVel + (4.9*scaleF*tAirborne));//(prevVel + pow(2, 1.1)) * 1.5);
+		tAirborne = tAirborne + deltaT;
 
 		//bound arrow to stay on screen
 		if (projectileSprite.getPosition().y < -8 * 2 * scaleF)
 		{
-			projectileSprite.setPosition(0, -8 * 2 * scaleF);
+			projectileSprite.setPosition(0, -16 * scaleF);
 		}
-		else if (projectileSprite.getPosition().y > window.getSize().y + -8 * scaleF)
+		else if (projectileSprite.getPosition().y > window.getSize().y - 8 * scaleF)
 		{
-			projectileSprite.setPosition(0, window.getSize().y - 8 * 2 * scaleF);
+			projectileSprite.setPosition(0, window.getSize().y - 16 * scaleF);
 		}
 
 		//set hitbox on stem of arrow
