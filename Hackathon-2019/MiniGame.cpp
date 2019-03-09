@@ -239,6 +239,7 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 	std::vector<int> obsticleLocations;
 	std::vector<double> obsticleHeights;
 	std::vector<sf::Sprite> obsticles;
+	startingVel = startingVel * scaleF * 60 * deltaT;
 
 	//4 random distances and heights
 	for (int i = 0; i < 4; i++)
@@ -308,7 +309,7 @@ int miniGameRangedAttack(std::string projectileImage, sf::RenderWindow &window, 
 		}
 
 		//exponentially decrease trajectory simulating gravity
-		projectileSprite.move(0, -3*prevVel + (4.9*scaleF*tAirborne));//(prevVel + pow(2, 1.1)) * 1.5);
+		projectileSprite.move(0, -1*prevVel + (4.9*scaleF*tAirborne));//(prevVel + pow(2, 1.1)) * 1.5);
 		tAirborne = tAirborne + deltaT;
 
 		//bound arrow to stay on screen

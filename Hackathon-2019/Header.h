@@ -307,17 +307,33 @@ public:
 		{
 			wallR.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 32, 32, 32));
 		}
-		if (this->floorType < 2 && this->pRight->getFloorType() < 2 && this->pTop->getFloorType() < 2)
+		if (this->floorType < 2 && this->pRight->getFloorType() < 2 && this->pTop->getFloorType() < 2)//right and top 
 		{
 			wallTR.loadFromFile("WoodFenceCorners.png", sf::IntRect(64, 0, 32, 32));
 		}
-		else
+		else if (this->floorType < 2 && this->pRight->getFloorType() < 2)//right not top
+		{
+			wallTR.loadFromFile("StoneWallCorners.png", sf::IntRect(32, 0, 32, 32));
+		}
+		else if (this->floorType < 2 && this->pTop->getFloorType() < 2)//top not right
+		{
+			wallTR.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 32, 32, 32));
+		}
+		else//neither
 		{
 			wallTR.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 0, 32, 32));
 		}
-		if (this->floorType < 2 && this->pLeft->getFloorType() < 2 && this->pTop->getFloorType() < 2)
+		if (this->floorType < 2 && this->pLeft->getFloorType() < 2 && this->pTop->getFloorType() < 2)//top and left
 		{
 			wallTL.loadFromFile("WoodFenceCorners.png", sf::IntRect(0, 0, 32, 32));
+		}
+		else if (this->floorType < 2 && this->pLeft->getFloorType() < 2)//left not top
+		{
+			wallTL.loadFromFile("StoneWallCorners.png", sf::IntRect(32, 0, 32, 32));
+		}
+		else if (this->floorType < 2 && this->pTop->getFloorType() < 2)//top not left
+		{
+			wallTL.loadFromFile("StoneWallCorners.png", sf::IntRect(0, 32, 32, 32));
 		}
 		else
 		{
@@ -327,13 +343,29 @@ public:
 		{
 			wallBR.loadFromFile("WoodFenceCorners.png", sf::IntRect(64, 64, 32, 32));
 		}
+		else if (this->floorType < 2 && this->pRight->getFloorType() < 2)//right not bott
+		{
+			wallBR.loadFromFile("StoneWallCorners.png", sf::IntRect(32, 64, 32, 32));
+		}
+		else if (this->floorType < 2 && this->pBottom->getFloorType() < 2)//bott not right
+		{
+			wallBR.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 32, 32, 32));
+		}
 		else
 		{
 			wallBR.loadFromFile("StoneWallCorners.png", sf::IntRect(64, 64, 32, 32));
 		}
-		if (this->floorType < 2 && this->pLeft->getFloorType() < 2 && this->pBottom->getFloorType() < 2)
+		if (this->floorType < 2 && this->pLeft->getFloorType() < 2 && this->pBottom->getFloorType() < 2)//left and bottom
 		{
 			wallBL.loadFromFile("WoodFenceCorners.png", sf::IntRect(0, 64, 32, 32));
+		}
+		else if (this->floorType < 2 && this->pLeft->getFloorType() < 2)//left and not bottom
+		{
+			wallBL.loadFromFile("StoneWallCorners.png", sf::IntRect(32, 64, 32, 32));
+		}
+		else if (this->floorType < 2 && this->pBottom->getFloorType() < 2)//bottom not left
+		{
+			wallBL.loadFromFile("StoneWallCorners.png", sf::IntRect(0, 32, 32, 32));
 		}
 		else
 		{
