@@ -410,14 +410,14 @@ int miniGameDodgeAttack(sf::RenderWindow &window) {
 	sf::Sprite attackerSprite;
 	attackerSprite.setTexture(attacker1);
 	attackerSprite.setScale(scaleF * 2.5, scaleF * 2.5);
-	attackerSprite.setPosition(Vector2f(rand()%window.getSize().x, rand() % window.getSize().y));
+	attackerSprite.setPosition(Vector2f(rand() % (int)(window.getSize().x - attacker1.getSize().x * attackerSprite.getScale().x), rand() % (int)(window.getSize().y - attacker1.getSize().y * attackerSprite.getScale().y)));
 
 	sf::Texture attacker2;
 	attacker2.loadFromFile("Skeleton.png");
 	sf::Sprite attackerSprite2;
 	attackerSprite2.setTexture(attacker2);
 	attackerSprite2.setScale(scaleF * 2, scaleF * 2);
-	attackerSprite2.setPosition(Vector2f(rand() % window.getSize().x, rand() % window.getSize().y));
+	attackerSprite2.setPosition(Vector2f(rand() % (int)(window.getSize().x - attacker2.getSize().x * attackerSprite2.getScale().x), rand() % (int)(window.getSize().y - attacker2.getSize().y * attackerSprite2.getScale().y)));
 
 	sf::Texture attacker3;
 	attacker3.loadFromFile("SwampMonster.png");
@@ -425,92 +425,99 @@ int miniGameDodgeAttack(sf::RenderWindow &window) {
 	attackerSprite3.setTexture(attacker3);
 	attackerSprite3.setScale(scaleF * 1, scaleF * 1);
 	attackerSprite3.setPosition(Vector2f(0, 10.f));
-	attackerSprite3.setPosition(Vector2f(rand() % window.getSize().x, rand() % window.getSize().y));
+	attackerSprite3.setPosition(Vector2f(rand() % (int)(window.getSize().x - attacker3.getSize().x * attackerSprite3.getScale().x), rand() % (int)(window.getSize().y - attacker3.getSize().y * attackerSprite3.getScale().y)));
 
 	sf::Texture treasure;
 	treasure.loadFromFile("HealthPotion.png");
 	sf::Sprite treasureSprite;
 	treasureSprite.setTexture(treasure);
 	treasureSprite.setScale(scaleF * .75, scaleF * .75);
-	treasureSprite.setPosition(Vector2f(rand() % window.getSize().x, rand() % window.getSize().y));
+	treasureSprite.setPosition(Vector2f(rand() % (int)(window.getSize().x - treasure.getSize().x * treasureSprite.getScale().x), rand() % (int)(window.getSize().y - treasure.getSize().y * treasureSprite.getScale().y)));
 
-	CircleShape attacker;
+	CircleShape playerCursor;
 	bool isHit = false;
-	attacker.setRadius(10.f);
-	attacker.setFillColor(Color::Black);
-	attacker.setPosition(Vector2f(0, 0));
+	playerCursor.setRadius(10.f);
+	playerCursor.setFillColor(Color::Black);
+	playerCursor.setPosition(Vector2f(sf::Mouse::getPosition().x - 10, sf::Mouse::getPosition().y - 10));
 
 	//hitbox of potion
 	//sf::hitBox.setPosition(treasureSprite.getPosition().x + 5 * scaleF, treasureSprite.getPosition().y + 15 * scaleF);
 	
-	//loop
-	while (limit < 50)
+	for (int i = 0; i < 4; i++)//initialize character movement
 	{
-		for (int i = 0; i < 4; i++)
+		if (time.at(i) <= 0)
 		{
-			if (time.at(i) <= 0)
+			time.at(i) = (30 + rand() % 60);
+			characterx.push_back(rand() % window.getSize().y);
+			charactery.push_back(rand() % window.getSize().y);
+			switch (rand() % 4)
 			{
-				time.at(i)=(30 + rand() % 60);
-				characterx.push_back(rand() % window.getSize().y);
-				charactery.push_back(rand() % window.getSize().y);
-				switch (rand() % 4)
-				{
-				case 1:
-					characterx.at(i) = -1 * characterx.at(i);
-					charactery.at(i) = charactery.at(i);
-					break;
+			case 1:
+				characterx.at(i) = -1 * characterx.at(i);
+				charactery.at(i) = charactery.at(i);
+				break;
 
-				case 2:
-					characterx.at(i) = characterx.at(i);
-					charactery.at(i) = -1 * charactery.at(i);
-					break;
-				case 3:
-					characterx.at(i) = -1 * characterx.at(i);
-					charactery.at(i) = -1 * charactery.at(i);
-					break;
-				default:
-					characterx.at(i) = characterx.at(i);
-					charactery.at(i) = charactery.at(i);
-					break;
-				}
+			case 2:
+				characterx.at(i) = characterx.at(i);
+				charactery.at(i) = -1 * charactery.at(i);
+				break;
+			case 3:
+				characterx.at(i) = -1 * characterx.at(i);
+				charactery.at(i) = -1 * charactery.at(i);
+				break;
+			default:
+				characterx.at(i) = characterx.at(i);
+				charactery.at(i) = charactery.at(i);
+				break;
 			}
 		}
+	}
+
+	//loop
+	while (limit < 150)
+	{
+
 		//check windowClose
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if (event.type == sf::Event::MouseMoved)		//update attack
+			{
+				playerCursor.setPosition(Vector2f(sf::Mouse::getPosition().x - 10, sf::Mouse::getPosition().y - 10));
+			}
 		}
 
-		if (attackerSprite.getPosition().x <= 0 || attackerSprite.getPosition().x > window.getSize().x) {
+		//bopund to screen/bounce off walls
+		if (attackerSprite.getPosition().x <= 0 || attackerSprite.getPosition().x > window.getSize().x - attacker1.getSize().x * attackerSprite.getScale().x) {
 			characterx.at(0) = -1 * characterx.at(0);
 			limit++;
 		}
-		if (attackerSprite.getPosition().y >= window.getSize().y || attackerSprite.getPosition().y < 0) {
+		if (attackerSprite.getPosition().y >= window.getSize().y - attacker1.getSize().y * attackerSprite.getScale().y || attackerSprite.getPosition().y < 0) {
 			charactery.at(0) = -1 * charactery.at(0);
 			limit++;
 		}
-		if (attackerSprite2.getPosition().x <= 0 || attackerSprite2.getPosition().x > window.getSize().x) {
+		if (attackerSprite2.getPosition().x <= 0 || attackerSprite2.getPosition().x > window.getSize().x - attacker2.getSize().x * attackerSprite2.getScale().x) {
 			characterx.at(1) = -1 * characterx.at(1);
 			limit++;
 		}
-		if (attackerSprite2.getPosition().y >= window.getSize().y || attackerSprite2.getPosition().y < 0) {
+		if (attackerSprite2.getPosition().y >= window.getSize().y - attacker2.getSize().y * attackerSprite2.getScale().y || attackerSprite2.getPosition().y < 0) {
 			charactery.at(1) = -1 * charactery.at(1);
 			limit++;
 		}
-		if (attackerSprite3.getPosition().x <= 0 || attackerSprite3.getPosition().x > window.getSize().x) {
+		if (attackerSprite3.getPosition().x <= 0 || attackerSprite3.getPosition().x > window.getSize().x - attacker3.getSize().x * attackerSprite3.getScale().x) {
 			characterx.at(2) = -1 * characterx.at(2);
 			limit++;
 		}
-		if (attackerSprite3.getPosition().y >= window.getSize().y || attackerSprite3.getPosition().y < 0) {
+		if (attackerSprite3.getPosition().y >= window.getSize().y - attacker3.getSize().y * attackerSprite3.getScale().y || attackerSprite3.getPosition().y < 0) {
 			charactery.at(2) = -1 * charactery.at(2);
 			limit++;
 		}
-		if (treasureSprite.getPosition().x <= 0 || treasureSprite.getPosition().x > window.getSize().x) {
+		if (treasureSprite.getPosition().x <= 0 || treasureSprite.getPosition().x > window.getSize().x - treasure.getSize().x * treasureSprite.getScale().x) {
 			characterx.at(3) = -1 * characterx.at(3);
 			limit++;
 		}
-		if (treasureSprite.getPosition().y >= window.getSize().y || treasureSprite.getPosition().y < 0) {
+		if (treasureSprite.getPosition().y >= window.getSize().y - treasure.getSize().y * treasureSprite.getScale().y || treasureSprite.getPosition().y < 0) {
 			charactery.at(3) = -1 * charactery.at(3);
 			limit++;
 		}
@@ -521,66 +528,49 @@ int miniGameDodgeAttack(sf::RenderWindow &window) {
 		attackerSprite3.move(sf::Vector2f(characterx.at(2), charactery.at(2)));
 		treasureSprite.move(sf::Vector2f(characterx.at(3), charactery.at(3)));
 
-		//update attack
-		if (!isHit) {
-			attacker.setPosition(Mouse::getPosition(window).x, Mouse::getPosition(window).y);
-		}
-
-		if (attacker.getGlobalBounds().intersects(attackerSprite.getGlobalBounds())) {
-			//reset 
-			isHit = false;
-			randYValue = rand() % window.getSize().y;
-			randValue = randYValue;
-			attackerSprite.setPosition(Vector2f(attackerSprite.getPosition().x, randValue));
+		//contact
+		if (playerCursor.getGlobalBounds().intersects(attackerSprite.getGlobalBounds())) {
+			attackerSprite.setPosition(Vector2f(rand() % (int)(window.getSize().x - attacker1.getSize().x * attackerSprite.getScale().x), rand() % (int)(window.getSize().y - attacker1.getSize().y * attackerSprite.getScale().y)));
 			++limit;
 			score--;
 		}
-
-		if (attacker.getGlobalBounds().intersects(attackerSprite2.getGlobalBounds())) {
-			//reset 
-			isHit = false;
-			randYValue = rand() % window.getSize().y;
-			randValue = randYValue;
-			attackerSprite2.setPosition(Vector2f(attackerSprite2.getPosition().x, randValue));
+		if (playerCursor.getGlobalBounds().intersects(attackerSprite2.getGlobalBounds())) {
+			attackerSprite2.setPosition(Vector2f(rand() % (int)(window.getSize().x - attacker2.getSize().x * attackerSprite2.getScale().x), rand() % (int)(window.getSize().y - attacker2.getSize().y * attackerSprite2.getScale().y)));
 			++limit;
 			score--; //score for if you want to implement 
 		}
-		if (attacker.getGlobalBounds().intersects(attackerSprite3.getGlobalBounds())) {
-			//reset 
-			isHit = false;
-			randYValue = rand() % window.getSize().y;
-			randValue = randYValue;
-			attackerSprite3.setPosition(Vector2f(attackerSprite3.getPosition().x, randValue));
+		if (playerCursor.getGlobalBounds().intersects(attackerSprite3.getGlobalBounds())) {
+			attackerSprite3.setPosition(Vector2f(rand() % (int)(window.getSize().x - attacker3.getSize().x * attackerSprite3.getScale().x), rand() % (int)(window.getSize().y - attacker3.getSize().y * attackerSprite3.getScale().y)));
 			++limit;
 			score--;
 		}
-		if (treasureSprite.getGlobalBounds().intersects(attacker.getGlobalBounds())) {
-			//reset 
-			isHit = false;
-
-			randYValue = rand() % window.getSize().y;
-			randValue = randYValue;
-			randYValue = rand() % window.getSize().y;
-			treasureSprite.setPosition(Vector2f(randYValue, randValue));
-			randValue = rand() % 6;
-			
+		if (treasureSprite.getGlobalBounds().intersects(playerCursor.getGlobalBounds())) {
+			treasureSprite.setPosition(Vector2f(rand() % (int)(window.getSize().x - treasure.getSize().x * treasureSprite.getScale().x), rand() % (int)(window.getSize().y - treasure.getSize().y * treasureSprite.getScale().y)));
+			randValue = rand() % 6;//wut?
 			score = score + 2;
 			limit++;
 		}
 
-
+		//change direction at random intervals
+		for (int i = 0; i < 4; i++)
+		{
+			time.at(i)--;
+			if (time.at(i) <= 0)
+			{
+				time.at(i) = (30 + rand() % 60);
+				characterx.at(i) = (rand() % window.getSize().x / time.at(i));
+				charactery.at(i) = (rand() % window.getSize().y / time.at(i));
+			}
+		}
 		window.clear();
 		window.draw(StoneBackground);
 		window.draw(attackerSprite);
 		window.draw(attackerSprite2);
 		window.draw(attackerSprite3);
 		window.draw(treasureSprite);
-		window.draw(attacker);
+		//window.draw(playerCursor);
 		window.display();
-		for (int i = 0; i < 4; i++)
-		{
-			time.at(i)--;
-		}
+
 	}
 	return 0;
 }
